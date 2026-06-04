@@ -20,9 +20,13 @@ app.use(cors({
     const allowedOrigins = [
       'http://localhost:5173',
       process.env.FRONTEND_URL,
-    ].filter(Boolean);
+    ]
+      .filter(Boolean)
+      .map((value) => value.replace(/\/$/, ''));
 
-    if (!origin || allowedOrigins.includes(origin)) {
+    const normalizedOrigin = origin ? origin.replace(/\/$/, '') : origin;
+
+    if (!normalizedOrigin || allowedOrigins.includes(normalizedOrigin)) {
       return callback(null, true);
     }
 
