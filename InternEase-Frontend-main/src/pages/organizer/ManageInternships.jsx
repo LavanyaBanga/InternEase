@@ -277,7 +277,7 @@ const ManageInternships = () => {
                 {internship.poster && (
                   <div className="flex-shrink-0">
                     <img
-                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/${internship.poster}`}
+                      src={`${import.meta.env.VITE_API_URL?.replace(/\/api$/, '')}/${internship.poster}`}
                       alt={internship.company}
                       className="w-24 h-24 object-cover rounded-lg"
                       onError={(e) => {

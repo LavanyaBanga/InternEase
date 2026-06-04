@@ -6,6 +6,8 @@ import {
   MapPinIcon,
 } from '@heroicons/react/24/outline'
 
+const API_BASE_URL = import.meta.env.VITE_API_URL
+
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -27,7 +29,7 @@ const ContactUs = () => {
     setIsSubmitting(true)
     
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const response = await fetch(`${API_BASE_URL}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

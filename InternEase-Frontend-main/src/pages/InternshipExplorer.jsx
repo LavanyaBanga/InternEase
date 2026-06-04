@@ -153,7 +153,7 @@ const InternshipExplorer = () => {
     const imageUrl = internship.poster
       ? internship.poster.startsWith('http')
         ? internship.poster
-        : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/${internship.poster}`
+        : `${import.meta.env.VITE_API_URL?.replace(/\/api$/, '')}/${internship.poster}`
       : null
 
     return (

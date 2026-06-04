@@ -14,6 +14,8 @@ import {
 } from '@heroicons/react/24/outline'
 import { mockUserStats } from '../data/mockData'
 
+const API_ORIGIN = import.meta.env.VITE_API_URL?.replace(/\/api$/, '')
+
 const StudentDashboard = () => {
   const { user } = useAuth()
   const [allEvents, setAllEvents] = useState([])
@@ -133,7 +135,7 @@ const StudentDashboard = () => {
                 <div key={internship._id} className="flex items-center gap-3 p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                   {internship.poster ? (
                     <img
-                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/${internship.poster}`}
+                      src={`${API_ORIGIN}/${internship.poster}`}
                       alt={internship.company}
                       className="w-10 h-10 rounded-lg object-cover flex-shrink-0"
                       onError={(e) => { e.target.style.display = 'none' }}
@@ -202,7 +204,7 @@ const StudentDashboard = () => {
                 <div key={event._id || event.id} className="flex gap-3 p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                   {event.poster ? (
                     <img
-                      src={`http://localhost:5000${event.poster}`}
+                      src={`${API_ORIGIN}${event.poster}`}
                       alt={event.title}
                       className="w-10 h-10 object-cover rounded-lg flex-shrink-0"
                       onError={(e) => { e.target.style.display = 'none' }}

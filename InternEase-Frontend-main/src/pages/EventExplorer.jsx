@@ -12,6 +12,8 @@ import apiService from '../services/api'
 import LoadingSpinner from '../components/LoadingSpinner'
 import ErrorBoundary from '../components/ErrorBoundary'
 
+const API_ORIGIN = import.meta.env.VITE_API_URL?.replace(/\/api$/, '')
+
 const EventExplorer = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -168,7 +170,7 @@ const EventExplorer = () => {
   const EventCard = ({ event, isListView = false }) => {
     const eventId = event._id || event.id || event.eventbriteId
     const isEventbriteEvent = event.isEventbrite
-    const posterUrl = isEventbriteEvent ? event.poster : `http://localhost:5000${event.poster}`
+    const posterUrl = isEventbriteEvent ? event.poster : `${API_ORIGIN}${event.poster}`
     
     return (
     <Card 

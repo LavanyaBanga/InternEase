@@ -15,6 +15,8 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/outline'
 
+const API_ORIGIN = import.meta.env.VITE_API_URL?.replace(/\/api$/, '')
+
 const ManageEvents = () => {
   const { user } = useAuth()
   const location = useLocation()
@@ -183,7 +185,7 @@ const ManageEvents = () => {
         {event.poster && (
           <div className="flex-shrink-0">
             <img 
-              src={`http://localhost:5000${event.poster}`}
+              src={`${API_ORIGIN}${event.poster}`}
               alt={event.title}
               className="w-32 h-32 object-cover rounded-lg"
               onError={(e) => {
@@ -631,7 +633,7 @@ const ManageEvents = () => {
               {/* Event Poster */}
               {selectedEvent.poster && (
                 <img 
-                  src={`http://localhost:5000${selectedEvent.poster}`}
+                  src={`${API_ORIGIN}${selectedEvent.poster}`}
                   alt={selectedEvent.title}
                   className="w-full h-64 object-cover rounded-lg mb-6"
                 />
