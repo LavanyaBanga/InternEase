@@ -43,23 +43,19 @@ const Landing = () => {
     <div style={{ fontFamily: "'Bricolage Grotesque', 'Inter', sans-serif", background: 'linear-gradient(135deg, #0F172A 0%, #312E81 50%, #8B5CF6 100%)', color: '#0f0f1a', overflowX: 'hidden' }}>
 
       {/* ── NAV ── */}
-      <nav style={{
-        position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '1.5rem 3rem'
-      }}>
-        <span style={{ fontFamily: 'Georgia, serif', fontSize: '1.6rem', color: '#fff', fontWeight: 400 }}>
-          intern<span style={{ color: '#a78bfa' }}>Ease</span>
+      <nav className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 py-4 md:px-12 md:py-6">
+        <span className="font-sans text-2xl text-white font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+          intern<span className="text-violet-400">Ease</span>
         </span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-          {['Features', 'Events', 'Pricing'].map(l => (
-            <a key={l} href="#" style={{ color: 'rgba(255,255,255,0.65)', fontSize: '14px', textDecoration: 'none', fontWeight: 500 }}>{l}</a>
-          ))}
-          <Link to="/signup" style={{
-            background: 'rgba(108,71,255,0.8)', color: '#fff', padding: '9px 22px',
-            borderRadius: '100px', fontSize: '14px', fontWeight: 600, textDecoration: 'none',
-            border: '1px solid rgba(108,71,255,0.5)'
-          }}>Sign in</Link>
+        <div className="flex items-center gap-4 md:gap-8">
+          <div className="hidden sm:flex items-center gap-4 md:gap-8">
+            {['Features', 'Events', 'Pricing'].map(l => (
+              <a key={l} href="#" className="text-white/60 hover:text-white text-sm font-medium transition-colors decoration-none" style={{ textDecoration: 'none' }}>{l}</a>
+            ))}
+          </div>
+          <Link to="/signup" className="bg-violet-600/80 hover:bg-violet-600 text-white px-5 py-2 rounded-full text-sm font-semibold border border-violet-600/50 transition-colors" style={{ textDecoration: 'none' }}>
+            Sign in
+          </Link>
         </div>
       </nav>
 

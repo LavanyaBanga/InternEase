@@ -9,7 +9,7 @@ import {
   ChevronDownIcon
 } from '@heroicons/react/24/outline'
 
-const Navbar = () => {
+const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [showProfile, setShowProfile] = useState(false)
   const { user, logout } = useAuth()
@@ -61,7 +61,7 @@ const Navbar = () => {
                     className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                   >
                     <UserCircleIcon className="h-8 w-8 text-gray-700 dark:text-gray-300" />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <span className="hidden sm:inline text-sm font-medium text-gray-700 dark:text-gray-300">
                       {user.name}
                     </span>
                     <ChevronDownIcon className="h-4 w-4 text-gray-700 dark:text-gray-300" />
@@ -97,13 +97,13 @@ const Navbar = () => {
               <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
-                  className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
+                  className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors text-sm sm:text-base"
                 >
                   Login
                 </Link>
                 <Link
                   to="/signup"
-                  className="btn-primary"
+                  className="btn-primary !py-1.5 !px-3 sm:!py-2 sm:!px-4 text-sm sm:text-base"
                 >
                   Sign Up
                 </Link>
@@ -112,10 +112,16 @@ const Navbar = () => {
 
             {/* Mobile menu button */}
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
+              onClick={() => {
+                if (setSidebarOpen && !['/login', '/signup'].includes(location.pathname)) {
+                  setSidebarOpen(!sidebarOpen)
+                } else {
+                  setIsOpen(!isOpen)
+                }
+              }}
+              className="lg:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
             >
-              {isOpen ? (
+              {(setSidebarOpen && !['/login', '/signup'].includes(location.pathname) ? sidebarOpen : isOpen) ? (
                 <XMarkIcon className="h-6 w-6" />
               ) : (
                 <Bars3Icon className="h-6 w-6" />
@@ -127,22 +133,26 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden bg-white dark:bg-cardDark border-t dark:border-gray-700">
+        <div className="lg:hidden bg-white dark:bg-cardDark border-t dark:border-gray-700">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                  location.pathname === item.href
-                    ? 'text-primary bg-primary/10'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-primary'
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {!user && (
+              <>
+                <Link
+                  to="/login"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

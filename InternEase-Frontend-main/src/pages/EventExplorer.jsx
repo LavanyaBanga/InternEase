@@ -174,21 +174,21 @@ const EventExplorer = () => {
     
     return (
     <Card 
-      className={`${isListView ? 'flex items-center space-x-4' : ''}`}
+      className={`${isListView ? 'flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4' : ''}`}
       onMouseEnter={() => handleEventHover(event)}
     >
-      <div className={`${isListView ? 'flex-shrink-0' : ''}`}>
+      <div className={`${isListView ? 'flex-shrink-0 w-full sm:w-auto' : 'w-full'}`}>
         {event.poster ? (
           <img 
             src={posterUrl}
             alt={event.title}
-            className={`${isListView ? 'w-16 h-16' : 'w-full h-32'} object-cover rounded-lg mb-4`}
+            className={`${isListView ? 'w-full sm:w-16 h-32 sm:h-16' : 'w-full h-32'} object-cover rounded-lg mb-4 sm:mb-0`}
             onError={(e) => {
               e.target.style.display = 'none'
             }}
           />
         ) : (
-          <div className={`${isListView ? 'w-16 h-16' : 'w-full h-32'} bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mb-4`}>
+          <div className={`${isListView ? 'w-full sm:w-16 h-32 sm:h-16' : 'w-full h-32'} bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mb-4 sm:mb-0`}>
             <CalendarIcon className="h-8 w-8 text-white" />
           </div>
         )}
@@ -256,7 +256,7 @@ const EventExplorer = () => {
 
   return (
     <ErrorBoundary>
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
           Explore Events
@@ -353,7 +353,7 @@ const EventExplorer = () => {
           </div>
 
           {/* Events Grid/List */}
-          <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6' : 'space-y-4'}`}>
+          <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6' : 'space-y-4'}`}>
             {filteredEvents.map((event) => (
               <EventCard 
                 key={event._id || event.id || event.eventbriteId} 

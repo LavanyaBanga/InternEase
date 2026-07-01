@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from '../components/Card'
 import LoadingSpinner from '../components/LoadingSpinner'
 import apiService from '../services/api'
@@ -158,7 +158,7 @@ const InternshipExplorer = () => {
 
     return (
       <Card
-        className={`!p-3 ${isListView ? 'flex items-center space-x-3' : ''}`}
+        className={`!p-3 ${isListView ? 'flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-3' : ''}`}
         onMouseEnter={() => internship._id && handleViewTracking(internship._id)}
       >
         
@@ -241,7 +241,7 @@ const InternshipExplorer = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
           Explore Internships ({internships.length} total)
@@ -348,7 +348,7 @@ const InternshipExplorer = () => {
         </p>
       </div>
 
-      <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6' : 'space-y-0'}`}>
+      <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6' : 'space-y-4'}`}>
         {filteredInternships.map((internship) => (
           <InternshipCard
             key={internship._id}

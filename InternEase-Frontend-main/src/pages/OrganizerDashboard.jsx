@@ -88,7 +88,7 @@ const OrganizerDashboard = () => {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 space-y-6">
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-6 text-white">
         <h1 className="text-2xl font-bold mb-2">Welcome back, {user?.name || 'Organizer'} 👋</h1>

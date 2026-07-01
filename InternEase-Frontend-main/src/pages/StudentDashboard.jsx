@@ -80,7 +80,7 @@ const StudentDashboard = () => {
   ]
 
   return (
-    <div className="p-6 space-y-5">
+    <div className="p-4 sm:p-6 space-y-5">
 
     
       <div className="relative bg-gradient-to-r from-primary to-secondary rounded-2xl p-6 text-white overflow-hidden">
@@ -99,7 +99,7 @@ const StudentDashboard = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon
           return (

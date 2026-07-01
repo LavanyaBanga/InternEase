@@ -99,16 +99,16 @@ const Login = () => {
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
           {/* Role Toggle */}
-          <div className="flex rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+          <div className="flex rounded-xl bg-white/5 border border-white/10 p-1">
             <button
               type="button"
               onClick={() => setFormData({ ...formData, role: 'student' })}
-              className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+              className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
                 formData.role === 'student'
-                  ? 'bg-primary text-white'
-                  : 'text-gray-700 dark:text-gray-300 hover:text-primary'
+                  ? 'bg-violet-600 text-white shadow-lg'
+                  : 'text-gray-300 hover:text-white'
               }`}
             >
               Student
@@ -116,10 +116,10 @@ const Login = () => {
             <button
               type="button"
               onClick={() => setFormData({ ...formData, role: 'organizer' })}
-              className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+              className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
                 formData.role === 'organizer'
-                  ? 'bg-primary text-white'
-                  : 'text-gray-700 dark:text-gray-300 hover:text-primary'
+                  ? 'bg-violet-600 text-white shadow-lg'
+                  : 'text-gray-300 hover:text-white'
               }`}
             >
               Organizer
@@ -127,7 +127,10 @@ const Login = () => {
           </div>
 
           {/* Email Field */}
-          <div className="relative">
+          <div className="space-y-2">
+            <label htmlFor="email" className="block text-sm font-medium text-white/80">
+              Email Address
+            </label>
             <input
               id="email"
               name="email"
@@ -135,69 +138,46 @@ const Login = () => {
               required
               value={formData.email}
               onChange={handleChange}
-             className="
-peer
-w-full
-px-5
-py-4
-rounded-2xl
-bg-white/10
-border
-border-white/10
-text-white
-placeholder-transparent
-backdrop-blur-md
-focus:outline-none
-focus:ring-2
-focus:ring-violet-400
-focus:border-transparent
-"
-              placeholder="Email address"
+              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent transition-all"
+              placeholder="name@example.com"
             />
-            <label
-              htmlFor="email"
-              className="absolute left-4 -top-2.5 bg-white dark:bg-cardDark px-1 text-sm font-medium text-gray-600 dark:text-gray-300 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-violet-300"
-            >
-              Email address
-            </label>
           </div>
 
           {/* Password Field */}
-          <div className="relative">
-            <input
-              id="password"
-              name="password"
-              type={showPassword ? 'text' : 'password'}
-              required
-              value={formData.password}
-              onChange={handleChange}
-              className="peer w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Password"
-            />
-            <label
-              htmlFor="password"
-              className="absolute left-4 -top-2.5 bg-white dark:bg-cardDark px-1 text-sm font-medium text-gray-600 dark:text-gray-300 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-primary peer-focus:text-sm"
-            >
+          <div className="space-y-2">
+            <label htmlFor="password" className="block text-sm font-medium text-white/80">
               Password
             </label>
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-            >
-              {showPassword ? (
-                <EyeSlashIcon className="h-5 w-5" />
-              ) : (
-                <EyeIcon className="h-5 w-5" />
-              )}
-            </button>
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                required
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent transition-all"
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-3.5 text-gray-400 hover:text-gray-300"
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-5 w-5" />
+                ) : (
+                  <EyeIcon className="h-5 w-5" />
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
-            className={`w-full btn-primary ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`w-full bg-violet-600 hover:bg-violet-500 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-violet-500/20 transition-all duration-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             {loading ? 'Signing in...' : 'Sign in'}
           </button>

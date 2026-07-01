@@ -193,7 +193,7 @@ const ApplicationTracker = () => {
               <span className="ml-2 text-sm text-red-600 font-medium">Rejected</span>
             </div>
           ) : (
-            <div className="flex items-center space-x-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-8 space-y-3 sm:space-y-0 flex-wrap">
               {stages.map((stage, index) => (
                 <TimelineStep
                   key={stage}
@@ -239,7 +239,7 @@ const ApplicationTracker = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
           Application Tracker
@@ -254,7 +254,7 @@ const ApplicationTracker = () => {
       ) : (
         <>
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
             {Object.entries(statusCounts).map(([status, count]) => (
               <Card key={status} className="text-center">
                 <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">

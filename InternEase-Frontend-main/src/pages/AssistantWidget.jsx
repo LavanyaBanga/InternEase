@@ -89,7 +89,7 @@ const AssistantWidget = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
           AI Assistant
@@ -100,7 +100,7 @@ const AssistantWidget = () => {
       </div>
 
       <div className="max-w-4xl mx-auto">
-        <Card className="h-[600px] flex flex-col">
+        <Card className="h-[calc(100vh-200px)] min-h-[400px] md:h-[600px] flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center space-x-3">
