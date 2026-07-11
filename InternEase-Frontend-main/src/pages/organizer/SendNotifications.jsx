@@ -80,21 +80,21 @@ const SendNotifications = () => {
 
   const MessagePreview = () => (
     <Card>
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4">
         Preview
       </h3>
       <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border-l-4 border-primary">
         <div className="flex items-center space-x-2 mb-2">
-          <div className={`w-2 h-2 rounded-full ${
+          <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
             formData.type === 'broadcast' ? 'bg-red-500' :
             formData.type === 'internship' ? 'bg-green-500' :
             formData.type === 'event' ? 'bg-purple-500' : 'bg-blue-500'
           }`} />
-          <span className="text-sm font-medium text-gray-900 dark:text-white">
+          <span className="text-sm font-medium text-gray-900 dark:text-white break-words">
             {formData.title || 'Notification Title'}
           </span>
         </div>
-        <p className="text-gray-600 dark:text-gray-300 text-sm">
+        <p className="text-gray-600 dark:text-gray-300 text-sm break-words">
           {formData.message || 'Your notification message will appear here...'}
         </p>
         <div className="mt-3 text-xs text-gray-500">
@@ -102,7 +102,7 @@ const SendNotifications = () => {
         </div>
         {formData.link && (
           <div className="mt-2">
-            <span className="text-xs text-primary">🔗 {formData.link}</span>
+            <span className="text-xs text-primary break-words">🔗 {formData.link}</span>
           </div>
         )}
       </div>
@@ -110,21 +110,21 @@ const SendNotifications = () => {
   )
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
           Send Notifications
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
           Send important updates and announcements to your audience
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
         {/* Notification Form */}
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <Card>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Compose Notification
             </h3>
             
@@ -196,7 +196,7 @@ const SendNotifications = () => {
           </Card>
 
           <Card>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Target Audience
             </h3>
             
@@ -214,9 +214,9 @@ const SendNotifications = () => {
                         value={option.value}
                         checked={formData.targetAudience === option.value}
                         onChange={(e) => handleInputChange('targetAudience', e.target.value)}
-                        className="text-primary focus:ring-primary"
+                        className="text-primary focus:ring-primary flex-shrink-0"
                       />
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <div className="font-medium text-gray-900 dark:text-white">
                           {option.label}
                         </div>
@@ -229,7 +229,7 @@ const SendNotifications = () => {
           </Card>
 
           <Card>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <h4 className="font-medium text-gray-900 dark:text-white">
                   Ready to send?
@@ -241,7 +241,7 @@ const SendNotifications = () => {
               <button
                 onClick={handleSend}
                 disabled={sending || !formData.title.trim() || !formData.message.trim()}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-colors ${
+                className={`flex items-center justify-center space-x-2 px-6 py-3 rounded-lg font-medium transition-colors w-full sm:w-auto ${
                   sending || !formData.title.trim() || !formData.message.trim()
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-primary hover:bg-secondary text-white'
@@ -264,36 +264,36 @@ const SendNotifications = () => {
         </div>
 
         {/* Preview and Stats */}
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <MessagePreview />
 
           <Card>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Notification Stats
             </h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <span className="text-gray-600 dark:text-gray-300">This Month</span>
+                <span className="text-sm sm:text-base text-gray-600 dark:text-gray-300">This Month</span>
                 <span className="font-bold text-gray-900 dark:text-white">24 sent</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <span className="text-gray-600 dark:text-gray-300">Average Open Rate</span>
+                <span className="text-sm sm:text-base text-gray-600 dark:text-gray-300">Average Open Rate</span>
                 <span className="font-bold text-green-600">78%</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <span className="text-gray-600 dark:text-gray-300">Last Sent</span>
+                <span className="text-sm sm:text-base text-gray-600 dark:text-gray-300">Last Sent</span>
                 <span className="font-bold text-gray-900 dark:text-white">2 hours ago</span>
               </div>
             </div>
           </Card>
 
           <Card>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Best Practices
             </h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-2">
-                <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5" />
+                <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-gray-900 dark:text-white">
                     Keep titles under 50 characters
@@ -304,7 +304,7 @@ const SendNotifications = () => {
                 </div>
               </div>
               <div className="flex items-start space-x-2">
-                <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5" />
+                <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-gray-900 dark:text-white">
                     Personalize your message
@@ -315,7 +315,7 @@ const SendNotifications = () => {
                 </div>
               </div>
               <div className="flex items-start space-x-2">
-                <ExclamationTriangleIcon className="h-5 w-5 text-yellow-500 mt-0.5" />
+                <ExclamationTriangleIcon className="h-5 w-5 text-yellow-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-gray-900 dark:text-white">
                     Avoid spam words

@@ -44,8 +44,6 @@ const CreateInternship = () => {
   // Pre-fill form data when in edit mode
   useEffect(() => {
     if (editMode && internshipData) {
-      console.log('Edit mode detected, pre-filling form with:', internshipData)
-      
       // Format the date for input field (YYYY-MM-DD)
       let formattedDate = ''
       if (internshipData.deadline || internshipData.lastDate) {
@@ -103,12 +101,6 @@ const CreateInternship = () => {
     setLoading(true)
 
     try {
-      console.log(editMode ? '=== UPDATING INTERNSHIP ===' : '=== CREATING INTERNSHIP ===')
-      console.log('User:', user)
-      console.log('User Role:', user?.role)
-      console.log('Form Data:', formData)
-      console.log('Token exists:', !!localStorage.getItem('internease_token'))
-
       if (editMode) {
         // Update existing internship
         const updateData = {
@@ -127,16 +119,12 @@ const CreateInternship = () => {
           responsibilities: formData.responsibilities ? formData.responsibilities.split(',').map(r => r.trim()).filter(r => r) : []
         }
 
-        console.log('Update data:', updateData)
-        const response = await apiService.updateInternship(internshipData._id, updateData)
-        console.log('API Response:', response)
-        console.log('Internship updated successfully!')
+        await apiService.updateInternship(internshipData._id, updateData)
 
         alert('Internship updated successfully!')
         navigate('/organizer/manage-internships')
       } else {
         // Create new internship
-        // Create FormData for file upload
         const submitData = new FormData()
         submitData.append('title', formData.title)
         submitData.append('company', formData.company)
@@ -167,25 +155,13 @@ const CreateInternship = () => {
           submitData.append('poster', formData.poster)
         }
 
-        // Log FormData contents
-        console.log('FormData contents:')
-        for (let [key, value] of submitData.entries()) {
-          console.log(`  ${key}:`, value)
-        }
-
-        console.log('Submitting internship data to API...')
-        const response = await apiService.createInternship(submitData)
-        console.log('API Response:', response)
-        console.log('Internship created successfully!')
+        await apiService.createInternship(submitData)
 
         alert('Internship posted successfully!')
         navigate('/organizer/manage-internships')
       }
     } catch (error) {
-      console.error(editMode ? '=== ERROR UPDATING INTERNSHIP ===' : '=== ERROR CREATING INTERNSHIP ===')
-      console.error('Error object:', error)
-      console.error('Error message:', error.message)
-      console.error('Error stack:', error.stack)
+      console.error(editMode ? 'Failed to update internship:' : 'Failed to create internship:', error)
       alert(error.message || 'Failed to create internship. Please try again.')
     } finally {
       setLoading(false)
@@ -199,42 +175,42 @@ const CreateInternship = () => {
   ]
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6 bg-slate-50 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">
           {editMode ? 'Edit Internship' : 'Post New Internship'}
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-slate-500">
           {editMode ? 'Update the internship details' : 'Fill in the details to post a new internship opportunity'}
         </p>
       </div>
 
       {/* Progress Steps */}
       <div className="mb-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-start sm:items-center justify-between">
           {steps.map((step, index) => (
             <React.Fragment key={step.number}>
-              <div className="flex items-center">
-                <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold ${
+              <div className="flex flex-col sm:flex-row items-center">
+                <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold flex-shrink-0 ${
                   currentStep >= step.number
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-slate-100 text-slate-500'
                 }`}>
                   {step.number}
                 </div>
-                <span className={`ml-2 font-medium ${
+                <span className={`mt-1 sm:mt-0 sm:ml-2 text-xs sm:text-sm font-medium text-center whitespace-nowrap ${
                   currentStep >= step.number
-                    ? 'text-gray-900 dark:text-white'
-                    : 'text-gray-500 dark:text-gray-400'
+                    ? 'text-slate-900'
+                    : 'text-slate-500'
                 }`}>
                   {step.title}
                 </span>
               </div>
               {index < steps.length - 1 && (
-                <div className={`flex-1 h-1 mx-4 ${
+                <div className={`flex-1 h-1 mx-2 sm:mx-4 mt-5 sm:mt-0 ${
                   currentStep > step.number
-                    ? 'bg-primary'
-                    : 'bg-gray-200 dark:bg-gray-700'
+                    ? 'bg-indigo-600'
+                    : 'bg-slate-200'
                 }`} />
               )}
             </React.Fragment>
@@ -246,12 +222,12 @@ const CreateInternship = () => {
         {/* Step 1: Basic Info */}
         {currentStep === 1 && (
           <Card>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">
               Basic Information
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   <BriefcaseIcon className="h-4 w-4 inline mr-1" />
                   Internship Title *
                 </label>
@@ -259,28 +235,28 @@ const CreateInternship = () => {
                   type="text"
                   value={formData.title}
                   onChange={(e) => handleInputChange('title', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="e.g., Full Stack Developer Intern"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Company Name *
                 </label>
                 <input
                   type="text"
                   value={formData.company}
                   onChange={(e) => handleInputChange('company', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="e.g., TechCorp Solutions"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   <DocumentTextIcon className="h-4 w-4 inline mr-1" />
                   Description *
                 </label>
@@ -288,7 +264,7 @@ const CreateInternship = () => {
                   value={formData.description}
                   onChange={(e) => handleInputChange('description', e.target.value)}
                   rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="Describe the internship role and what the intern will do..."
                   required
                 />
@@ -296,7 +272,7 @@ const CreateInternship = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     <ClockIcon className="h-4 w-4 inline mr-1" />
                     Duration
                   </label>
@@ -304,13 +280,13 @@ const CreateInternship = () => {
                     type="text"
                     value={formData.duration}
                     onChange={(e) => handleInputChange('duration', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     placeholder="e.g., 3 months, 6 months"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     <CurrencyDollarIcon className="h-4 w-4 inline mr-1" />
                     Stipend
                   </label>
@@ -318,7 +294,7 @@ const CreateInternship = () => {
                     type="text"
                     value={formData.stipend}
                     onChange={(e) => handleInputChange('stipend', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     placeholder="e.g., ₹10,000/month or Unpaid"
                   />
                 </div>
@@ -328,7 +304,7 @@ const CreateInternship = () => {
                 <button
                   type="button"
                   onClick={() => setCurrentStep(2)}
-                  className="btn-primary"
+                  className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2 rounded-lg transition-colors"
                 >
                   Next Step
                 </button>
@@ -340,13 +316,13 @@ const CreateInternship = () => {
         {/* Step 2: Details */}
         {currentStep === 2 && (
           <Card>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">
               Internship Details
             </h3>
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     <MapPinIcon className="h-4 w-4 inline mr-1" />
                     Location *
                   </label>
@@ -354,20 +330,20 @@ const CreateInternship = () => {
                     type="text"
                     value={formData.location}
                     onChange={(e) => handleInputChange('location', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     placeholder="e.g., Bangalore, India"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Work Mode
                   </label>
                   <select
                     value={formData.workMode}
                     onChange={(e) => handleInputChange('workMode', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
                     <option value="Remote">Remote</option>
                     <option value="On-site">On-site</option>
@@ -378,7 +354,7 @@ const CreateInternship = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     <CalendarIcon className="h-4 w-4 inline mr-1" />
                     Application Deadline *
                   </label>
@@ -386,19 +362,19 @@ const CreateInternship = () => {
                     type="date"
                     value={formData.lastDate}
                     onChange={(e) => handleInputChange('lastDate', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Type
                   </label>
                   <select
                     value={formData.type}
                     onChange={(e) => handleInputChange('type', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
                     <option value="internship">Internship</option>
                     <option value="full-time">Full-time</option>
@@ -409,7 +385,7 @@ const CreateInternship = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   <PhotoIcon className="h-4 w-4 inline mr-1" />
                   Company Logo / Poster (Optional)
                 </label>
@@ -417,7 +393,7 @@ const CreateInternship = () => {
                   type="file"
                   onChange={handleFileChange}
                   accept="image/*"
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
                 {formData.poster && (
                   <p className="text-sm text-green-600 mt-2">
@@ -426,18 +402,18 @@ const CreateInternship = () => {
                 )}
               </div>
 
-              <div className="flex justify-between">
+              <div className="flex flex-col sm:flex-row justify-between gap-3">
                 <button
                   type="button"
                   onClick={() => setCurrentStep(1)}
-                  className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  className="px-6 py-2 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 transition-colors"
                 >
                   Previous
                 </button>
                 <button
                   type="button"
                   onClick={() => setCurrentStep(3)}
-                  className="btn-primary"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2 rounded-lg transition-colors"
                 >
                   Next Step
                 </button>
@@ -449,73 +425,73 @@ const CreateInternship = () => {
         {/* Step 3: Requirements */}
         {currentStep === 3 && (
           <Card>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">
               Requirements & Responsibilities
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Required Skills (comma-separated)
                 </label>
                 <textarea
                   value={formData.skills}
                   onChange={(e) => handleInputChange('skills', e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="e.g., React, Node.js, MongoDB, JavaScript, Git"
                 />
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-slate-400 mt-1">
                   Separate skills with commas
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Requirements (comma-separated)
                 </label>
                 <textarea
                   value={formData.requirements}
                   onChange={(e) => handleInputChange('requirements', e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="e.g., Bachelor's degree in Computer Science, Strong problem-solving skills, Good communication"
                 />
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-slate-400 mt-1">
                   Separate each requirement with a comma
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Key Responsibilities (comma-separated)
                 </label>
                 <textarea
                   value={formData.responsibilities}
                   onChange={(e) => handleInputChange('responsibilities', e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="e.g., Develop web applications, Write clean code, Collaborate with team, Participate in code reviews"
                 />
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-slate-400 mt-1">
                   Separate each responsibility with a comma
                 </p>
               </div>
 
-              <div className="flex justify-between">
+              <div className="flex flex-col sm:flex-row justify-between gap-3">
                 <button
                   type="button"
                   onClick={() => setCurrentStep(2)}
-                  className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  className="px-6 py-2 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 transition-colors"
                 >
                   Previous
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className={`px-6 py-2 rounded-lg font-medium ${
+                  className={`px-6 py-2 rounded-lg font-medium transition-colors ${
                     loading
-                      ? 'bg-gray-400 cursor-not-allowed'
-                      : 'bg-primary hover:bg-secondary text-white'
+                      ? 'bg-slate-300 cursor-not-allowed text-white'
+                      : 'bg-indigo-600 hover:bg-indigo-700 text-white'
                   }`}
                 >
                   {loading ? (editMode ? 'Updating...' : 'Posting...') : (editMode ? 'Update Internship' : 'Post Internship')}

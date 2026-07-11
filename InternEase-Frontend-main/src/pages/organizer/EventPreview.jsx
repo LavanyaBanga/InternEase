@@ -78,7 +78,7 @@ const EventPreview = () => {
 
   if (!event) {
     return (
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         <div className="text-center py-12">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
             Event not found
@@ -96,17 +96,17 @@ const EventPreview = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-darkBg">
       {/* Header */}
-      <div className="bg-white dark:bg-cardDark shadow-sm">
-        <div className="max-w-6xl mx-auto px-6 py-4">
+      <div className="bg-white dark:bg-cardDark shadow-sm sticky top-0 z-40">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <Link
               to="/manage-events"
-              className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
+              className="flex items-center space-x-1 sm:space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
             >
-              <ChevronLeftIcon className="h-5 w-5" />
-              <span>Back to Events</span>
+              <ChevronLeftIcon className="h-5 w-5 flex-shrink-0" />
+              <span className="text-sm sm:text-base">Back to Events</span>
             </Link>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               <button
                 onClick={() => setIsLiked(!isLiked)}
                 className={`p-2 rounded-full transition-colors ${
@@ -123,28 +123,28 @@ const EventPreview = () => {
                   <ShareIcon className="h-5 w-5" />
                 </button>
                 {showShareMenu && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-cardDark rounded-lg shadow-lg py-2 z-50">
+                  <div className="absolute right-0 mt-2 w-44 sm:w-48 bg-white dark:bg-cardDark rounded-lg shadow-lg py-2 z-50 border border-gray-100 dark:border-gray-700">
                     <button
                       onClick={() => handleShare('twitter')}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      className="w-full text-left px-4 py-2.5 sm:py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       Share on Twitter
                     </button>
                     <button
                       onClick={() => handleShare('linkedin')}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      className="w-full text-left px-4 py-2.5 sm:py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       Share on LinkedIn
                     </button>
                     <button
                       onClick={() => handleShare('facebook')}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      className="w-full text-left px-4 py-2.5 sm:py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       Share on Facebook
                     </button>
                     <button
                       onClick={() => handleShare('copy')}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      className="w-full text-left px-4 py-2.5 sm:py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       Copy Link
                     </button>
@@ -157,26 +157,26 @@ const EventPreview = () => {
       </div>
 
       {/* Event Content */}
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-5 sm:space-y-6">
             {/* Event Header */}
             <Card>
               <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(event.status)}`}>
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span className={`px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${getStatusColor(event.status)}`}>
                       {event.status}
                     </span>
-                    <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                    <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium">
                       {event.type}
                     </span>
                   </div>
-                  <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2 break-words">
                     {event.title}
                   </h1>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4">
                     Organized by {event.organizer}
                   </p>
                 </div>
@@ -187,16 +187,16 @@ const EventPreview = () => {
                   <img 
                     src={event.poster} 
                     alt={event.title}
-                    className="w-full h-64 object-cover rounded-lg"
+                    className="w-full h-48 sm:h-64 object-cover rounded-lg"
                   />
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
                 <div className="flex items-center space-x-2">
-                  <CalendarIcon className="h-5 w-5 text-gray-400" />
-                  <div>
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                  <CalendarIcon className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
                       {event.date}
                     </div>
                     <div className="text-xs text-gray-500">{event.time}</div>
@@ -204,9 +204,9 @@ const EventPreview = () => {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <MapPinIcon className="h-5 w-5 text-gray-400" />
-                  <div>
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                  <MapPinIcon className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
                       {event.location}
                     </div>
                     <div className="text-xs text-gray-500">Location</div>
@@ -214,9 +214,9 @@ const EventPreview = () => {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <UsersIcon className="h-5 w-5 text-gray-400" />
-                  <div>
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                  <UsersIcon className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
                       {event.currentParticipants}/{event.maxParticipants}
                     </div>
                     <div className="text-xs text-gray-500">Registered</div>
@@ -224,9 +224,9 @@ const EventPreview = () => {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <BanknotesIcon className="h-5 w-5 text-gray-400" />
-                  <div>
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                  <BanknotesIcon className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
                       {event.registrationFee}
                     </div>
                     <div className="text-xs text-gray-500">Registration</div>
@@ -235,12 +235,12 @@ const EventPreview = () => {
               </div>
 
               {deadlineStatus && (
-                <div className={`flex items-center space-x-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg mb-6`}>
-                  <ClockIcon className="h-5 w-5 text-gray-400" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                <div className="flex flex-wrap items-center gap-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg mb-6">
+                  <ClockIcon className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
                     Registration deadline: {event.deadline}
                   </span>
-                  <span className={`text-sm font-medium ${deadlineStatus.color}`}>
+                  <span className={`text-xs sm:text-sm font-medium ${deadlineStatus.color}`}>
                     ({deadlineStatus.text})
                   </span>
                 </div>
@@ -249,10 +249,10 @@ const EventPreview = () => {
 
             {/* Description */}
             <Card>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 About This Event
               </h2>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
                 {event.description}
               </p>
             </Card>
@@ -260,14 +260,14 @@ const EventPreview = () => {
             {/* Requirements */}
             {event.requirements && event.requirements.length > 0 && (
               <Card>
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4">
                   Requirements
                 </h2>
                 <ul className="space-y-2">
                   {event.requirements.map((requirement, index) => (
                     <li key={index} className="flex items-start space-x-2">
                       <CheckCircleIcon className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-600 dark:text-gray-300">{requirement}</span>
+                      <span className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{requirement}</span>
                     </li>
                   ))}
                 </ul>
@@ -276,16 +276,16 @@ const EventPreview = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-5 sm:space-y-6">
             {/* Registration Card */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Registration
               </h3>
               
               <div className="space-y-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-1">
+                  <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">
                     {event.registrationFee}
                   </div>
                   <div className="text-sm text-gray-500">Registration Fee</div>
@@ -311,7 +311,7 @@ const EventPreview = () => {
 
                 <button 
                   disabled={event.status === 'Expired' || deadlineStatus?.text === 'Registration Closed'}
-                  className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
+                  className={`w-full py-3 px-4 rounded-lg font-medium transition-colors text-sm sm:text-base ${
                     event.status === 'Expired' || deadlineStatus?.text === 'Registration Closed'
                       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                       : 'bg-primary hover:bg-secondary text-white'
@@ -331,21 +331,21 @@ const EventPreview = () => {
 
             {/* Event Stats */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Event Statistics
               </h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-300">Views</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{event.views || 0}</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Views</span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">{event.views || 0}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-300">Applications</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{event.applications || 0}</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Applications</span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">{event.applications || 0}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-300">Created</span>
-                  <span className="font-medium text-gray-900 dark:text-white">
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Created</span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">
                     {new Date(event.createdAt).toLocaleDateString()}
                   </span>
                 </div>
@@ -354,15 +354,15 @@ const EventPreview = () => {
 
             {/* Organizer Info */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Organizer
               </h3>
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
                   <span className="text-white font-bold text-lg">T</span>
                 </div>
-                <div>
-                  <div className="font-medium text-gray-900 dark:text-white">
+                <div className="min-w-0">
+                  <div className="font-medium text-gray-900 dark:text-white truncate">
                     {event.organizer}
                   </div>
                   <div className="text-sm text-gray-500">Event Organizer</div>
@@ -371,7 +371,7 @@ const EventPreview = () => {
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                 Leading technology company focused on innovation and talent development.
               </p>
-              <button className="w-full btn-secondary">
+              <button className="w-full btn-secondary text-sm sm:text-base">
                 View Profile
               </button>
             </Card>

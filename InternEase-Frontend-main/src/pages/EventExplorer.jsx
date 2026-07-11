@@ -145,12 +145,12 @@ const EventExplorer = () => {
   }
 
   const categories = [
-    { id: 'all', name: 'All Events', color: 'bg-gray-100 text-gray-800' },
-    { id: 'Conference', name: 'Conference', color: 'bg-blue-100 text-blue-800' },
-    { id: 'Workshop', name: 'Workshop', color: 'bg-green-100 text-green-800' },
-    { id: 'Competition', name: 'Competition', color: 'bg-purple-100 text-purple-800' },
-    { id: 'Webinar', name: 'Webinar', color: 'bg-orange-100 text-orange-800' },
-    { id: 'Hackathon', name: 'Hackathon', color: 'bg-red-100 text-red-800' }
+    { id: 'all', name: 'All Events', color: 'bg-slate-100 text-slate-700' },
+    { id: 'Conference', name: 'Conference', color: 'bg-sky-50 text-sky-700' },
+    { id: 'Workshop', name: 'Workshop', color: 'bg-emerald-50 text-emerald-700' },
+    { id: 'Competition', name: 'Competition', color: 'bg-violet-50 text-violet-700' },
+    { id: 'Webinar', name: 'Webinar', color: 'bg-amber-50 text-amber-700' },
+    { id: 'Hackathon', name: 'Hackathon', color: 'bg-rose-50 text-rose-700' }
   ]
 
  
@@ -174,7 +174,7 @@ const EventExplorer = () => {
     
     return (
     <Card 
-      className={`${isListView ? 'flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4' : ''}`}
+      className={`bg-white border border-slate-100 shadow-sm ${isListView ? 'flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4' : ''}`}
       onMouseEnter={() => handleEventHover(event)}
     >
       <div className={`${isListView ? 'flex-shrink-0 w-full sm:w-auto' : 'w-full'}`}>
@@ -182,58 +182,58 @@ const EventExplorer = () => {
           <img 
             src={posterUrl}
             alt={event.title}
-            className={`${isListView ? 'w-full sm:w-16 h-32 sm:h-16' : 'w-full h-32'} object-cover rounded-lg mb-4 sm:mb-0`}
+            className={`${isListView ? 'w-full sm:w-16 h-40 sm:h-16' : 'w-full h-40 sm:h-32'} object-cover rounded-lg mb-4 sm:mb-0`}
             onError={(e) => {
               e.target.style.display = 'none'
             }}
           />
         ) : (
-          <div className={`${isListView ? 'w-full sm:w-16 h-32 sm:h-16' : 'w-full h-32'} bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mb-4 sm:mb-0`}>
+          <div className={`${isListView ? 'w-full sm:w-16 h-40 sm:h-16' : 'w-full h-40 sm:h-32'} bg-indigo-500 rounded-lg flex items-center justify-center mb-4 sm:mb-0`}>
             <CalendarIcon className="h-8 w-8 text-white" />
           </div>
         )}
       </div>
-      <div className={`${isListView ? 'flex-1' : ''}`}>
-        <div className="flex items-start justify-between mb-2">
-          <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+      <div className={`${isListView ? 'flex-1 min-w-0 w-full' : ''}`}>
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-base sm:text-lg font-semibold text-slate-900 break-words">
               {event.title}
             </h3>
             {isEventbriteEvent && (
-              <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-white">
+              <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-medium bg-slate-800 text-white">
                 🌐 Tech Event
               </span>
             )}
           </div>
-          <span className={`px-2 py-1 rounded-full text-xs ${
-            categories.find(cat => cat.id === event.type)?.color || 'bg-gray-100 text-gray-800'
+          <span className={`px-2 py-1 rounded-full text-xs flex-shrink-0 ${
+            categories.find(cat => cat.id === event.type)?.color || 'bg-slate-100 text-slate-700'
           }`}>
             {event.type}
           </span>
         </div>
-        <p className="text-gray-600 dark:text-gray-300 mb-3">
+        <p className="text-sm sm:text-base text-slate-500 mb-3 line-clamp-3 sm:line-clamp-none">
           {event.description}
         </p>
-        <div className="space-y-2 mb-4 text-sm text-gray-600 dark:text-gray-300">
+        <div className="space-y-2 mb-4 text-xs sm:text-sm text-slate-500">
           <div className="flex items-center">
-            <CalendarIcon className="h-4 w-4 mr-2" />
-            {event.date} at {event.time}
+            <CalendarIcon className="h-4 w-4 mr-2 flex-shrink-0" />
+            <span className="truncate">{event.date} at {event.time}</span>
           </div>
           <div className="flex items-center">
-            <MapPinIcon className="h-4 w-4 mr-2" />
-            {event.location}
+            <MapPinIcon className="h-4 w-4 mr-2 flex-shrink-0" />
+            <span className="truncate">{event.location}</span>
           </div>
           <div className="flex items-center">
-            <UsersIcon className="h-4 w-4 mr-2" />
+            <UsersIcon className="h-4 w-4 mr-2 flex-shrink-0" />
             Max {event.maxParticipants} participants
           </div>
         </div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-500">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm text-slate-400 truncate">
               {event.organizerName || event.organizer?.name || 'Unknown Organizer'}
             </span>
-            <span className="text-sm font-medium text-green-600">
+            <span className="text-sm font-medium text-emerald-600">
               {event.registrationFee || (event.isFree ? 'Free' : 'Paid')}
             </span>
           </div>
@@ -242,8 +242,8 @@ const EventExplorer = () => {
             disabled={registeredEvents.includes(eventId)}
             className={
               registeredEvents.includes(eventId)
-                ? 'btn-primary !bg-green-600 hover:!bg-green-600 cursor-not-allowed' 
-                : 'btn-primary'
+                ? 'bg-emerald-600 text-white text-sm font-medium px-4 py-2 rounded-lg cursor-not-allowed w-full sm:w-auto'
+                : 'bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors w-full sm:w-auto'
             }
           >
             {registeredEvents.includes(eventId) ? 'Registered ✓' : 'Register'}
@@ -256,12 +256,12 @@ const EventExplorer = () => {
 
   return (
     <ErrorBoundary>
-    <div className="p-4 sm:p-6">
+    <div className="p-4 sm:p-6 bg-slate-50 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">
           Explore Events
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-sm sm:text-base text-slate-500">
           Discover conferences, workshops, hackathons and more
         </p>
       </div>
@@ -275,12 +275,12 @@ const EventExplorer = () => {
 
       {/* Error State */}
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
-          <div className="flex items-center justify-between">
-            <p className="text-red-800 dark:text-red-200">{error}</p>
+        <div className="bg-red-50 border border-red-100 rounded-lg p-4 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <p className="text-red-700 text-sm sm:text-base break-words">{error}</p>
             <button
               onClick={loadEvents}
-              className="text-sm px-3 py-1 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-200 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/60"
+              className="text-sm px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors flex-shrink-0 self-start sm:self-auto"
             >
               Retry
             </button>
@@ -294,32 +294,32 @@ const EventExplorer = () => {
           <div className="mb-6 space-y-4">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 relative">
-                <MagnifyingGlassIcon className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                <MagnifyingGlassIcon className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Search events..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={loadEvents}
-                  className="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20"
+                  className="flex-1 sm:flex-initial px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors whitespace-nowrap"
                 >
                   Refresh
                 </button>
-                <div className="flex rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden">
+                <div className="flex rounded-lg border border-slate-200 overflow-hidden bg-white flex-shrink-0">
                   <button
                     onClick={() => setViewMode('grid')}
-                    className={`p-2 ${viewMode === 'grid' ? 'bg-primary text-white' : 'hover:bg-gray-50 dark:hover:bg-gray-700'}`}
+                    className={`p-2 ${viewMode === 'grid' ? 'bg-indigo-600 text-white' : 'text-slate-500 hover:bg-slate-50'}`}
                   >
                     <ViewColumnsIcon className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
-                    className={`p-2 ${viewMode === 'list' ? 'bg-primary text-white' : 'hover:bg-gray-50 dark:hover:bg-gray-700'}`}
+                    className={`p-2 ${viewMode === 'list' ? 'bg-indigo-600 text-white' : 'text-slate-500 hover:bg-slate-50'}`}
                   >
                     <ListBulletIcon className="h-5 w-5" />
                   </button>
@@ -333,10 +333,10 @@ const EventExplorer = () => {
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                  className={`px-3 py-1 rounded-full text-xs sm:text-sm font-medium transition-colors ${
                     selectedCategory === category.id
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                      ? 'bg-indigo-600 text-white'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
                   {category.name}
@@ -347,13 +347,13 @@ const EventExplorer = () => {
 
           {/* Results */}
           <div className="mb-4">
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-sm sm:text-base text-slate-500">
               Showing {filteredEvents.length} events
             </p>
           </div>
 
           {/* Events Grid/List */}
-          <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6' : 'space-y-4'}`}>
+          <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6' : 'space-y-4'}`}>
             {filteredEvents.map((event) => (
               <EventCard 
                 key={event._id || event.id || event.eventbriteId} 
@@ -364,14 +364,14 @@ const EventExplorer = () => {
           </div>
 
           {filteredEvents.length === 0 && !loading && (
-            <div className="text-center py-12">
-              <div className="text-gray-400 dark:text-gray-600 mb-4">
+            <div className="text-center py-12 px-4">
+              <div className="text-slate-300 mb-4">
                 <CalendarIcon className="h-12 w-12 mx-auto" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+              <h3 className="text-lg font-medium text-slate-900 mb-2">
                 No events found
               </h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-sm sm:text-base text-slate-500">
                 Try adjusting your search criteria or category filter
               </p>
             </div>

@@ -186,20 +186,20 @@ const ManageInternships = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
             Manage Internships
           </h1>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
             View and manage your posted internship opportunities
           </p>
         </div>
         <button
           onClick={() => navigate('/organizer/create-internship')}
-          className="btn-primary flex items-center gap-2"
+          className="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto"
         >
           <PlusIcon className="h-5 w-5" />
           Post New Internship
@@ -214,7 +214,7 @@ const ManageInternships = () => {
             <button
               key={tab}
               onClick={() => setFilter(tab)}
-              className={`px-4 py-2 rounded-lg font-medium capitalize ${
+              className={`px-3 sm:px-4 py-2 rounded-lg font-medium capitalize text-sm sm:text-base ${
                 filter === tab
                   ? 'bg-primary text-white'
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
@@ -227,11 +227,11 @@ const ManageInternships = () => {
 
         {/* Location Filter Dropdown */}
         <div className="flex items-center gap-2">
-          <MapPinIcon className="h-5 w-5 text-gray-500" />
+          <MapPinIcon className="h-5 w-5 text-gray-500 flex-shrink-0" />
           <select
             value={locationFilter}
             onChange={(e) => setLocationFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <option value="all">All Locations</option>
             {uniqueLocations.map((location) => (
@@ -245,7 +245,7 @@ const ManageInternships = () => {
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 p-4 rounded-lg mb-6">
+        <div className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 p-4 rounded-lg mb-6 text-sm sm:text-base">
           {error}
         </div>
       )}
@@ -253,7 +253,7 @@ const ManageInternships = () => {
       {/* Internships List */}
       {filteredInternships.length === 0 ? (
         <Card>
-          <div className="text-center py-12">
+          <div className="text-center py-12 px-4">
             <p className="text-gray-500 dark:text-gray-400 mb-4">
               {filter === 'all' ? 'No internships posted yet' : `No ${filter} internships`}
             </p>
@@ -279,7 +279,7 @@ const ManageInternships = () => {
                     <img
                       src={`${import.meta.env.VITE_API_URL?.replace(/\/api$/, '')}/${internship.poster}`}
                       alt={internship.company}
-                      className="w-24 h-24 object-cover rounded-lg"
+                      className="w-full h-40 md:w-24 md:h-24 object-cover rounded-lg"
                       onError={(e) => {
                         e.target.style.display = 'none'
                       }}
@@ -288,59 +288,59 @@ const ManageInternships = () => {
                 )}
 
                 {/* Content */}
-                <div className="flex-1">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
+                    <div className="min-w-0">
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white break-words">
                         {internship.title}
                       </h3>
-                      <p className="text-lg text-gray-700 dark:text-gray-300">
+                      <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
                         {internship.company}
                       </p>
                     </div>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(internship.status)}`}>
+                    <span className={`px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${getStatusColor(internship.status)}`}>
                       {internship.status || 'Active'}
                     </span>
                   </div>
 
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
                     {internship.description}
                   </p>
 
                   {/* Details Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <MapPinIcon className="h-4 w-4" />
-                      <span>{internship.location}</span>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4">
+                    <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                      <MapPinIcon className="h-4 w-4 flex-shrink-0" />
+                      <span className="truncate">{internship.location}</span>
                     </div>
                     {internship.duration && (
-                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                        <ClockIcon className="h-4 w-4" />
-                        <span>{internship.duration}</span>
+                      <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                        <ClockIcon className="h-4 w-4 flex-shrink-0" />
+                        <span className="truncate">{internship.duration}</span>
                       </div>
                     )}
                     {internship.stipend && (
-                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                        <CurrencyDollarIcon className="h-4 w-4" />
-                        <span>{internship.stipend}</span>
+                      <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                        <CurrencyDollarIcon className="h-4 w-4 flex-shrink-0" />
+                        <span className="truncate">{internship.stipend}</span>
                       </div>
                     )}
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <CalendarIcon className="h-4 w-4" />
-                      <span>Deadline: {formatDate(internship.lastDate)}</span>
+                    <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                      <CalendarIcon className="h-4 w-4 flex-shrink-0" />
+                      <span className="truncate">Deadline: {formatDate(internship.lastDate)}</span>
                     </div>
                   </div>
 
                   {/* Stats */}
-                  <div className="flex items-center gap-6 mb-4">
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-4">
                     <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <UserGroupIcon className="h-5 w-5 text-blue-500" />
+                      <UserGroupIcon className="h-5 w-5 text-blue-500 flex-shrink-0" />
                       <span className="font-semibold">
                         {internship.applicants?.length || 0} Applicants
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <EyeIcon className="h-5 w-5 text-green-500" />
+                      <EyeIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
                       <span className="font-semibold">
                         {internship.views || 0} Views
                       </span>
@@ -367,7 +367,7 @@ const ManageInternships = () => {
                   )}
 
                   {/* Actions */}
-                  <div className="flex gap-3">
+                  <div className="flex flex-wrap gap-3">
                     <button
                       onClick={() => handleEdit(internship)}
                       className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium"
@@ -399,28 +399,28 @@ const ManageInternships = () => {
 
       {/* Applicants Modal */}
       {showApplicantsModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-cardDark rounded-lg max-w-2xl w-full max-h-[80vh] overflow-hidden">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white dark:bg-cardDark rounded-lg max-w-2xl w-full max-h-[85vh] sm:max-h-[80vh] overflow-hidden">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700">
+              <div className="min-w-0">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
                   Applicants
                 </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 truncate">
                   {selectedInternship?.title}
                 </p>
               </div>
               <button
                 onClick={closeApplicantsModal}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg flex-shrink-0"
               >
                 <XMarkIcon className="h-6 w-6 text-gray-500" />
               </button>
             </div>
 
             {/* Modal Content */}
-            <div className="p-6 overflow-y-auto max-h-[calc(80vh-120px)]">
+            <div className="p-4 sm:p-6 overflow-y-auto max-h-[calc(85vh-140px)] sm:max-h-[calc(80vh-120px)]">
               {loadingApplicants ? (
                 <div className="flex justify-center py-8">
                   <LoadingSpinner />
@@ -437,22 +437,22 @@ const ManageInternships = () => {
                   {applicants.map((application, index) => (
                     <div
                       key={application._id || index}
-                      className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg flex items-center justify-between"
+                      className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
                           {(application.user?.name || application.studentName || 'Unknown').charAt(0).toUpperCase()}
                         </div>
-                        <div>
-                          <p className="font-medium text-gray-900 dark:text-white">
+                        <div className="min-w-0">
+                          <p className="font-medium text-gray-900 dark:text-white truncate">
                             {application.user?.name || application.studentName || 'Unknown Student'}
                           </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                          <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
                             {application.user?.email || 'No email'}
                           </p>
                         </div>
                       </div>
-                      <div className="text-right">
+                      <div className="text-left sm:text-right flex-shrink-0">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                           application.status === 'accepted' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
                           application.status === 'rejected' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
@@ -468,7 +468,7 @@ const ManageInternships = () => {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="p-4 sm:p-6 border-t border-gray-200 dark:border-gray-700">
               <button
                 onClick={closeApplicantsModal}
                 className="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600"

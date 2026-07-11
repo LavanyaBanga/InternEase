@@ -24,12 +24,9 @@ const CourseLibrary = () => {
 
   const loadGitHubCourses = async () => {
     try {
-      console.log('=== LOADING GITHUB COURSES ===')
       setLoading(true)
       const response = await apiService.getGitHubCourses(50)
-      console.log('GitHub Courses Response:', response)
       const githubData = response.data || response || []
-      console.log('Loaded GitHub courses:', githubData.length)
       setGithubCourses(Array.isArray(githubData) ? githubData : [])
     } catch (error) {
       console.error('Error loading GitHub courses:', error)
@@ -50,10 +47,10 @@ const CourseLibrary = () => {
   }
 
   const levels = [
-    { id: 'all', name: 'All Levels', color: 'bg-gray-100 text-gray-800' },
-    { id: 'Beginner', name: 'Beginner', color: 'bg-green-100 text-green-800' },
-    { id: 'Intermediate', name: 'Intermediate', color: 'bg-yellow-100 text-yellow-800' },
-    { id: 'Advanced', name: 'Advanced', color: 'bg-red-100 text-red-800' }
+    { id: 'all', name: 'All Levels', color: 'bg-slate-100 text-slate-700' },
+    { id: 'Beginner', name: 'Beginner', color: 'bg-emerald-50 text-emerald-700' },
+    { id: 'Intermediate', name: 'Intermediate', color: 'bg-amber-50 text-amber-700' },
+    { id: 'Advanced', name: 'Advanced', color: 'bg-rose-50 text-rose-700' }
   ]
 
   const filteredCourses = githubCourses.filter(course => {
@@ -77,7 +74,7 @@ const CourseLibrary = () => {
           <img 
             src={course.thumbnail} 
             alt={course.title}
-            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-40 sm:h-48 object-cover group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
             <button className="bg-white/20 backdrop-blur-sm p-3 rounded-full">
@@ -85,103 +82,103 @@ const CourseLibrary = () => {
             </button>
           </div>
           {course.price === 'Free' && (
-            <div className="absolute top-2 right-2 bg-success px-2 py-1 rounded-full text-xs font-medium text-white">
+            <div className="absolute top-2 right-2 bg-emerald-600 px-2 py-1 rounded-full text-xs font-medium text-white">
               Free
             </div>
           )}
         </div>
         
-        <div className="flex items-start justify-between mb-2">
-          <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+        <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-2">
               {course.title}
             </h3>
             {isGitHubCourse && (
-              <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-600 text-white">
+              <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-medium bg-sky-600 text-white">
                 🎓 Top University
               </span>
             )}
           </div>
-          <span className={`px-2 py-1 rounded-full text-xs ${
-            levels.find(level => level.id === course.level)?.color || 'bg-gray-100 text-gray-800'
+          <span className={`flex-shrink-0 px-2 py-1 rounded-full text-xs ${
+            levels.find(level => level.id === course.level)?.color || 'bg-slate-100 text-slate-700'
           }`}>
             {course.level}
           </span>
         </div>
       
-      <p className="text-gray-600 dark:text-gray-300 mb-3">
-        by {course.instructor}
-      </p>
-      
-      <div className="flex items-center space-x-4 mb-3 text-sm text-gray-600 dark:text-gray-300">
-        <div className="flex items-center">
-          <ClockIcon className="h-4 w-4 mr-1" />
-          {course.duration}
+        <p className="text-slate-500 mb-3 truncate">
+          by {course.instructor}
+        </p>
+        
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-3 text-sm text-slate-500">
+          <div className="flex items-center">
+            <ClockIcon className="h-4 w-4 mr-1 flex-shrink-0" />
+            {course.duration}
+          </div>
+          <div className="flex items-center">
+            <StarIcon className="h-4 w-4 mr-1 text-amber-400 fill-current flex-shrink-0" />
+            {course.rating}
+          </div>
         </div>
-        <div className="flex items-center">
-          <StarIcon className="h-4 w-4 mr-1 text-yellow-400 fill-current" />
-          {course.rating}
+        
+        <p className="text-sm text-slate-500 mb-4 line-clamp-3">
+          {course.description}
+        </p>
+        
+        <div className="flex flex-wrap gap-2 mb-4">
+          {course.topics.map((topic, index) => (
+            <span key={index} className="px-2 py-1 bg-indigo-50 text-indigo-600 rounded text-xs">
+              {topic}
+            </span>
+          ))}
         </div>
-      </div>
-      
-      <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-        {course.description}
-      </p>
-      
-      <div className="flex flex-wrap gap-2 mb-4">
-        {course.topics.map((topic, index) => (
-          <span key={index} className="px-2 py-1 bg-primary/10 text-primary rounded text-xs">
-            {topic}
+        
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <span className="text-lg font-bold text-slate-900">
+            {course.price}
           </span>
-        ))}
-      </div>
-      
-      <div className="flex items-center justify-between">
-        <span className="text-lg font-bold text-gray-900 dark:text-white">
-          {course.price}
-        </span>
-        {isGitHubCourse ? (
-          <a 
-            href={course.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary"
-          >
-            Start Learning →
-          </a>
-        ) : (
-          <button 
-            onClick={() => handleEnroll(course)}
-            disabled={enrolledCourses.includes(courseId)}
-            className={
-              enrolledCourses.includes(courseId) 
-                ? 'btn-primary !bg-green-600 hover:!bg-green-600 cursor-not-allowed' 
-                : 'btn-primary'
-            }
-          >
-            {enrolledCourses.includes(courseId) ? 'Enrolled ✓' : 'Enroll Now'}
-          </button>
-        )}
-      </div>
-    </Card>
+          {isGitHubCourse ? (
+            <a 
+              href={course.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-center bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+            >
+              Start Learning →
+            </a>
+          ) : (
+            <button 
+              onClick={() => handleEnroll(course)}
+              disabled={enrolledCourses.includes(courseId)}
+              className={
+                enrolledCourses.includes(courseId) 
+                  ? 'bg-emerald-600 text-white text-sm font-medium px-4 py-2 rounded-lg cursor-not-allowed'
+                  : 'bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors'
+              }
+            >
+              {enrolledCourses.includes(courseId) ? 'Enrolled ✓' : 'Enroll Now'}
+            </button>
+          )}
+        </div>
+      </Card>
     )
   }
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-96">
+      <div className="flex justify-center items-center h-96 bg-slate-50">
         <LoadingSpinner />
       </div>
     )
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6 bg-slate-50 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">
           🎓 Top University Courses ({githubCourses.length} courses)
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-slate-500">
           Learn from world-class universities and platforms
         </p>
       </div>
@@ -190,20 +187,20 @@ const CourseLibrary = () => {
       <div className="mb-6 space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1 relative">
-            <MagnifyingGlassIcon className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+            <MagnifyingGlassIcon className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
             <input
               type="text"
               placeholder="Search courses..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
           <div className="flex space-x-2">
             <select
               value={selectedPrice}
               onChange={(e) => setSelectedPrice(e.target.value)}
-              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full sm:w-auto px-3 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="all">All Prices</option>
               <option value="free">Free</option>
@@ -220,8 +217,8 @@ const CourseLibrary = () => {
               onClick={() => setSelectedLevel(level.id)}
               className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                 selectedLevel === level.id
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
               {level.name}
@@ -232,13 +229,13 @@ const CourseLibrary = () => {
 
       {/* Results */}
       <div className="mb-4">
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-slate-500">
           Showing {filteredCourses.length} courses
         </p>
       </div>
 
       {/* Courses Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredCourses.map((course) => (
           <CourseCard key={course.id || course.githubId} course={course} />
         ))}
@@ -246,13 +243,13 @@ const CourseLibrary = () => {
 
       {filteredCourses.length === 0 && (
         <div className="text-center py-12">
-          <div className="text-gray-400 dark:text-gray-600 mb-4">
+          <div className="text-slate-300 mb-4">
             <BookOpenIcon className="h-12 w-12 mx-auto" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+          <h3 className="text-lg font-medium text-slate-900 mb-2">
             No courses found
           </h3>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-slate-500">
             Try adjusting your search criteria or filters
           </p>
         </div>

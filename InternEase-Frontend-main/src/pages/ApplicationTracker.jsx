@@ -8,6 +8,7 @@ import {
   XCircleIcon,
   EyeIcon,
   DocumentArrowDownIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline'
 
 const ApplicationTracker = () => {
@@ -26,8 +27,6 @@ const ApplicationTracker = () => {
       setLoading(true)
       
       const response = await apiService.getMyApplications()
-      console.log('Full response:', JSON.stringify(response, null, 2))
-      console.log('My applications response:', response)
       
       let applicationsData = []
       if (response.data && Array.isArray(response.data)) {
@@ -65,7 +64,6 @@ const ApplicationTracker = () => {
         }
       })
       
-      console.log('Converted applications:', internshipApplications)
       setInternships(internshipApplications)
     } catch (error) {
       console.error('Error loading applications:', error)
@@ -87,17 +85,17 @@ const ApplicationTracker = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'Applied':
-        return 'bg-blue-100 text-blue-800'
+        return 'bg-blue-50 text-blue-700'
       case 'In Review':
-        return 'bg-yellow-100 text-yellow-800'
+        return 'bg-yellow-50 text-yellow-700'
       case 'Interview':
-        return 'bg-purple-100 text-purple-800'
+        return 'bg-purple-50 text-purple-700'
       case 'Selected':
-        return 'bg-green-100 text-green-800'
+        return 'bg-green-50 text-green-700'
       case 'Rejected':
-        return 'bg-red-100 text-red-800'
+        return 'bg-red-50 text-red-700'
       default:
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-slate-100 text-slate-700'
     }
   }
 
@@ -139,16 +137,16 @@ const ApplicationTracker = () => {
     const Icon = getStatusIcon(status)
     return (
       <div className="flex items-center">
-        <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${
+        <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 flex-shrink-0 ${
           isCompleted 
             ? 'bg-green-500 border-green-500' 
             : isActive 
-            ? 'bg-primary border-primary' 
-            : 'bg-gray-200 border-gray-200'
+            ? 'bg-indigo-600 border-indigo-600' 
+            : 'bg-slate-100 border-slate-200'
         }`}>
-          <Icon className={`h-4 w-4 ${isCompleted || isActive ? 'text-white' : 'text-gray-400'}`} />
+          <Icon className={`h-4 w-4 ${isCompleted || isActive ? 'text-white' : 'text-slate-400'}`} />
         </div>
-        <span className={`ml-2 text-sm ${isActive ? 'font-medium text-gray-900 dark:text-white' : 'text-gray-500'}`}>
+        <span className={`ml-2 text-sm ${isActive ? 'font-medium text-slate-900' : 'text-slate-500'}`}>
           {status}
         </span>
       </div>
@@ -162,27 +160,27 @@ const ApplicationTracker = () => {
     
     return (
       <Card>
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg font-semibold text-slate-900 mb-1 truncate">
               {application.internshipTitle || application.position}
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-2">
+            <p className="text-slate-500 mb-2">
               {application.company}
             </p>
-            <div className="flex items-center space-x-4 text-sm text-gray-500">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-400">
               <span>Applied: {application.appliedDate}</span>
               {application.deadline && <span>Deadline: {application.deadline}</span>}
             </div>
           </div>
-          <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(application.status)}`}>
+          <span className={`self-start px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${getStatusColor(application.status)}`}>
             {application.status}
           </span>
         </div>
 
         {/* Timeline */}
         <div className="mb-4">
-          <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          <h4 className="text-sm font-medium text-slate-900 mb-3">
             Application Progress
           </h4>
           {isRejected ? (
@@ -207,26 +205,26 @@ const ApplicationTracker = () => {
         </div>
 
         {/* Next Steps */}
-        <div className="border-t pt-4">
-          <div className="flex items-center justify-between">
+        <div className="border-t border-slate-200 pt-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <h4 className="text-sm font-medium text-gray-900 dark:text-white">
+              <h4 className="text-sm font-medium text-slate-900">
                 Next Step
               </h4>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-slate-500">
                 {application.nextStep || 'Waiting for response'}
               </p>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex flex-wrap gap-2">
               {application.status === 'Selected' && (
-                <button className="flex items-center px-3 py-1 text-sm bg-green-100 text-green-800 rounded-lg hover:bg-green-200 transition-colors">
+                <button className="flex items-center px-3 py-1 text-sm bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors">
                   <DocumentArrowDownIcon className="h-4 w-4 mr-1" />
                   Download Offer
                 </button>
               )}
               <button 
                 onClick={() => handleViewDetails(application)}
-                className="flex items-center px-3 py-1 text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                className="flex items-center px-3 py-1 text-sm bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors"
               >
                 <EyeIcon className="h-4 w-4 mr-1" />
                 View Details
@@ -239,12 +237,12 @@ const ApplicationTracker = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6">
+    <div className="p-4 sm:p-6 bg-slate-50 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-2xl font-bold text-slate-900 mb-2">
           Application Tracker
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-slate-500">
           Track the status of all your internship applications
         </p>
       </div>
@@ -257,10 +255,10 @@ const ApplicationTracker = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
             {Object.entries(statusCounts).map(([status, count]) => (
               <Card key={status} className="text-center">
-                <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                <div className="text-2xl font-bold text-slate-900 mb-1">
                   {count}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">
+                <div className="text-sm text-slate-500">
                   {status === 'all' ? 'Total' : status}
                 </div>
               </Card>
@@ -269,20 +267,20 @@ const ApplicationTracker = () => {
 
           {/* Filter Tabs */}
           <div className="mb-6">
-            <div className="flex items-center space-x-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1 overflow-x-auto">
+            <div className="flex items-center space-x-1 bg-white border border-slate-200 rounded-lg p-1 overflow-x-auto">
               {['all', 'Applied', 'In Review', 'Interview', 'Selected', 'Rejected'].map((status) => (
                 <button
                   key={status}
                   onClick={() => setFilter(status)}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
                     filter === status
-                      ? 'bg-primary text-white'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-primary'
+                      ? 'bg-indigo-600 text-white'
+                      : 'text-slate-600 hover:text-indigo-600'
                   }`}
                 >
                   {status === 'all' ? 'All' : status}
                   {statusCounts[status] > 0 && (
-                    <span className="ml-1 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-300 text-xs px-2 py-1 rounded-full">
+                    <span className="ml-1 bg-slate-200 text-slate-700 text-xs px-2 py-1 rounded-full">
                       {statusCounts[status]}
                     </span>
                   )}
@@ -299,11 +297,11 @@ const ApplicationTracker = () => {
               ))
             ) : (
               <div className="text-center py-12">
-                <ClockIcon className="h-12 w-12 text-gray-400 dark:text-gray-600 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                <ClockIcon className="h-12 w-12 text-slate-300 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-slate-900 mb-2">
                   No applications found
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-slate-500">
                   {filter === 'all' 
                     ? "You haven't applied to any internships yet" 
                     : `You have no applications with status "${filter}"`
@@ -317,33 +315,31 @@ const ApplicationTracker = () => {
 
       {/* Details Modal */}
       {showDetailsModal && selectedApplication && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={closeModal}>
-          <div className="bg-white dark:bg-cardDark rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={closeModal}>
+          <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             {/* Modal Header */}
-            <div className="sticky top-0 bg-white dark:bg-cardDark border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+            <div className="sticky top-0 bg-white border-b border-slate-200 px-4 sm:px-6 py-4 rounded-t-2xl">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                <h2 className="text-xl font-bold text-slate-900">
                   Application Details
                 </h2>
                 <button
                   onClick={closeModal}
-                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  className="p-1 text-slate-400 hover:text-slate-600 transition-colors"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                  <XMarkIcon className="h-6 w-6" />
                 </button>
               </div>
             </div>
 
             {/* Modal Content */}
-            <div className="px-6 py-4 space-y-6">
+            <div className="px-4 sm:px-6 py-4 space-y-6">
               {/* Company & Position */}
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">
                   {selectedApplication.internshipTitle || selectedApplication.position}
                 </h3>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
+                <p className="text-lg text-slate-500 mb-4">
                   {selectedApplication.company}
                 </p>
                 <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(selectedApplication.status)}`}>
@@ -352,28 +348,28 @@ const ApplicationTracker = () => {
               </div>
 
               {/* Application Info */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Applied Date</p>
-                  <p className="text-gray-900 dark:text-white">{selectedApplication.appliedDate}</p>
+                  <p className="text-sm font-medium text-slate-500 mb-1">Applied Date</p>
+                  <p className="text-slate-900">{selectedApplication.appliedDate}</p>
                 </div>
                 {selectedApplication.deadline && (
                   <div>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Deadline</p>
-                    <p className="text-gray-900 dark:text-white">{selectedApplication.deadline}</p>
+                    <p className="text-sm font-medium text-slate-500 mb-1">Deadline</p>
+                    <p className="text-slate-900">{selectedApplication.deadline}</p>
                   </div>
                 )}
               </div>
 
               {/* Next Step */}
               <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Next Step</p>
-                <p className="text-gray-900 dark:text-white">{selectedApplication.nextStep || 'Waiting for response'}</p>
+                <p className="text-sm font-medium text-slate-500 mb-2">Next Step</p>
+                <p className="text-slate-900">{selectedApplication.nextStep || 'Waiting for response'}</p>
               </div>
 
               {/* Timeline */}
               <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Application Progress</p>
+                <p className="text-sm font-medium text-slate-500 mb-3">Application Progress</p>
                 {selectedApplication.status === 'Rejected' ? (
                   <div className="flex items-center">
                     <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-500">
@@ -391,20 +387,20 @@ const ApplicationTracker = () => {
                       
                       return (
                         <div key={stage} className="flex items-center">
-                          <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${
+                          <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 flex-shrink-0 ${
                             isCompleted 
                               ? 'bg-green-500 border-green-500' 
                               : isActive 
-                              ? 'bg-primary border-primary' 
-                              : 'bg-gray-200 border-gray-200'
+                              ? 'bg-indigo-600 border-indigo-600' 
+                              : 'bg-slate-100 border-slate-200'
                           }`}>
                             {isCompleted ? (
                               <CheckCircleIcon className="h-4 w-4 text-white" />
                             ) : (
-                              <ClockIcon className={`h-4 w-4 ${isActive ? 'text-white' : 'text-gray-400'}`} />
+                              <ClockIcon className={`h-4 w-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
                             )}
                           </div>
-                          <span className={`ml-3 ${isActive ? 'font-medium text-gray-900 dark:text-white' : 'text-gray-500'}`}>
+                          <span className={`ml-3 ${isActive ? 'font-medium text-slate-900' : 'text-slate-500'}`}>
                             {stage}
                           </span>
                         </div>
@@ -415,16 +411,16 @@ const ApplicationTracker = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-200">
                 {selectedApplication.status === 'Selected' && (
-                  <button className="flex-1 flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                  <button className="flex-1 flex items-center justify-center px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors">
                     <DocumentArrowDownIcon className="h-5 w-5 mr-2" />
                     Download Offer Letter
                   </button>
                 )}
                 <button 
                   onClick={closeModal}
-                  className="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  className="flex-1 px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
                 >
                   Close
                 </button>

@@ -49,39 +49,39 @@ const OrganizerProfile = () => {
   }, [])
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
           Organization Profile
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
           Your organization's profile
         </p>
       </div>
 
-      <Card className="max-w-md">
+      <Card className="w-full max-w-md mx-auto sm:mx-0">
         <div className="text-center py-4">
-          <div className="flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mx-auto mb-4">
-            <BuildingOfficeIcon className="h-10 w-10 text-primary" />
+          <div className="flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/10 mx-auto mb-4">
+            <BuildingOfficeIcon className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
           </div>
 
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1 break-words px-2">
             {userData?.name || 'Loading...'}
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 mb-6">
+          <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-6 break-words px-2">
             {userData?.email || ''}
           </p>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-              <BriefcaseIcon className="h-6 w-6 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{internshipCount}</div>
-              <div className="text-sm text-gray-500">Internships</div>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 px-2">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 sm:p-4">
+              <BriefcaseIcon className="h-5 w-5 sm:h-6 sm:w-6 text-primary mx-auto mb-2" />
+              <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{internshipCount}</div>
+              <div className="text-xs sm:text-sm text-gray-500">Internships</div>
             </div>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-              <UsersIcon className="h-6 w-6 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{eventCount}</div>
-              <div className="text-sm text-gray-500">Events</div>
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 sm:p-4">
+              <UsersIcon className="h-5 w-5 sm:h-6 sm:w-6 text-primary mx-auto mb-2" />
+              <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{eventCount}</div>
+              <div className="text-xs sm:text-sm text-gray-500">Events</div>
             </div>
           </div>
         </div>

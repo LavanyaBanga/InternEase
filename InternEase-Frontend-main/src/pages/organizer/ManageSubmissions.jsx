@@ -131,7 +131,7 @@ const ManageSubmissions = () => {
 
   if (!event) {
     return (
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         <div className="text-center py-12">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
             Event not found
@@ -145,20 +145,20 @@ const ManageSubmissions = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-6">
         <div className="flex items-center space-x-2 mb-4">
           <Link
             to="/manage-events"
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex-shrink-0"
           >
             <ChevronLeftIcon className="h-5 w-5" />
           </Link>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <div className="min-w-0">
+            <h1 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white break-words">
               {event.title} - Submissions
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
               Manage applications for your event
             </p>
           </div>
@@ -166,33 +166,33 @@ const ManageSubmissions = () => {
 
         {/* Event Info */}
         <Card className="mb-6">
-          <div className="flex items-center space-x-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">{event.type[0]}</span>
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center flex-shrink-0">
+              <span className="text-white font-bold text-lg sm:text-xl">{event.type[0]}</span>
             </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            <div className="flex-1 min-w-0">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words">
                 {event.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
                 {event.date} • {event.location} • {event.currentParticipants}/{event.maxParticipants} registered
               </p>
             </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-primary">{submissions.length}</div>
+            <div className="text-left sm:text-right">
+              <div className="text-xl sm:text-2xl font-bold text-primary">{submissions.length}</div>
               <div className="text-sm text-gray-500">Total Applications</div>
             </div>
           </div>
         </Card>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
           {Object.entries(statusCounts).map(([status, count]) => (
             <Card key={status} className="text-center">
-              <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+              <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1">
                 {count}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
                 {status === 'all' ? 'Total' : status}
               </div>
             </Card>
@@ -213,11 +213,11 @@ const ManageSubmissions = () => {
               />
             </div>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="all">All Status</option>
               <option value="Pending">Pending</option>
@@ -227,7 +227,7 @@ const ManageSubmissions = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="appliedAt">Sort by Date</option>
               <option value="name">Sort by Name</option>
@@ -239,7 +239,7 @@ const ManageSubmissions = () => {
         {/* Bulk Actions */}
         {selectedSubmissions.length > 0 && (
           <Card className="mb-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <span className="text-sm text-gray-600 dark:text-gray-300">
                 {selectedSubmissions.length} submissions selected
               </span>
@@ -264,8 +264,9 @@ const ManageSubmissions = () => {
 
       {/* Submissions Table */}
       <Card>
-        <div className="overflow-x-auto">
-          <table className="w-full">
+        {/* Scrolls horizontally on small screens since a data table can't reflow */}
+        <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+          <table className="w-full min-w-[800px]">
             <thead>
               <tr className="border-b border-gray-200 dark:border-gray-700">
                 <th className="text-left py-3 px-4">
@@ -309,19 +310,19 @@ const ManageSubmissions = () => {
                   </td>
                   <td className="py-4 px-4">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
                         <UserIcon className="h-5 w-5 text-primary" />
                       </div>
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-white">
+                      <div className="min-w-0">
+                        <div className="font-medium text-gray-900 dark:text-white truncate">
                           {submission.applicantName}
                         </div>
-                        <div className="text-sm text-gray-500 flex items-center">
-                          <EnvelopeIcon className="h-3 w-3 mr-1" />
+                        <div className="text-sm text-gray-500 flex items-center truncate">
+                          <EnvelopeIcon className="h-3 w-3 mr-1 flex-shrink-0" />
                           {submission.email}
                         </div>
                         <div className="text-sm text-gray-500 flex items-center">
-                          <PhoneIcon className="h-3 w-3 mr-1" />
+                          <PhoneIcon className="h-3 w-3 mr-1 flex-shrink-0" />
                           {submission.phone}
                         </div>
                       </div>
@@ -329,9 +330,9 @@ const ManageSubmissions = () => {
                   </td>
                   <td className="py-4 px-4">
                     <div className="flex items-center">
-                      <AcademicCapIcon className="h-4 w-4 text-gray-400 mr-2" />
-                      <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-white">
+                      <AcademicCapIcon className="h-4 w-4 text-gray-400 mr-2 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
                           {submission.college}
                         </div>
                         <div className="text-sm text-gray-500">
@@ -365,7 +366,7 @@ const ManageSubmissions = () => {
                       <option value="Rejected">Rejected</option>
                     </select>
                   </td>
-                  <td className="py-4 px-4 text-sm text-gray-500">
+                  <td className="py-4 px-4 text-sm text-gray-500 whitespace-nowrap">
                     {new Date(submission.appliedAt).toLocaleDateString()}
                   </td>
                   <td className="py-4 px-4">
@@ -392,11 +393,11 @@ const ManageSubmissions = () => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
             <div className="text-sm text-gray-600 dark:text-gray-300">
               Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredSubmissions.length)} of {filteredSubmissions.length} submissions
             </div>
-            <div className="flex space-x-2">
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
@@ -430,12 +431,12 @@ const ManageSubmissions = () => {
       </Card>
 
       {filteredSubmissions.length === 0 && (
-        <div className="text-center py-12">
+        <div className="text-center py-12 px-4">
           <UserIcon className="h-12 w-12 text-gray-400 dark:text-gray-600 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
             No submissions found
           </h3>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
             {searchTerm || statusFilter !== 'all' 
               ? 'Try adjusting your search or filter criteria' 
               : 'No one has applied to this event yet'

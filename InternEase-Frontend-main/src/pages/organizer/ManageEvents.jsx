@@ -180,14 +180,14 @@ const ManageEvents = () => {
 
   const EventCard = ({ event }) => (
     <Card className="hover:shadow-xl transition-all duration-300">
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-4">
         {/* Event Poster */}
         {event.poster && (
           <div className="flex-shrink-0">
             <img 
               src={`${API_ORIGIN}${event.poster}`}
               alt={event.title}
-              className="w-32 h-32 object-cover rounded-lg"
+              className="w-full h-40 sm:w-32 sm:h-32 object-cover rounded-lg"
               onError={(e) => {
                 e.target.style.display = 'none'
               }}
@@ -196,36 +196,36 @@ const ManageEvents = () => {
         )}
         
         {/* Event Details */}
-        <div className="flex-1">
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex-1">
-              <div className="flex items-center space-x-2 mb-2">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-2 mb-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words">
                   {event.title}
                 </h3>
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(event.status)}`}>
                   {event.status}
                 </span>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
                 {event.description}
               </p>
-              <div className="flex items-center space-x-4 text-sm text-gray-500 mb-3">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm text-gray-500 mb-3">
                 <div className="flex items-center">
-                  <CalendarIcon className="h-4 w-4 mr-1" />
+                  <CalendarIcon className="h-4 w-4 mr-1 flex-shrink-0" />
                   {event.date}
                 </div>
                 <div className="flex items-center">
-                  <MapPinIcon className="h-4 w-4 mr-1" />
+                  <MapPinIcon className="h-4 w-4 mr-1 flex-shrink-0" />
                   {event.location}
                 </div>
                 <div className="flex items-center">
-                  <UsersIcon className="h-4 w-4 mr-1" />
+                  <UsersIcon className="h-4 w-4 mr-1 flex-shrink-0" />
                   {event.currentParticipants || event.registrations?.length || 0}/{event.maxParticipants}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-row sm:flex-col gap-2 flex-shrink-0">
               <button
                 onClick={() => handleViewDetails(event)}
                 className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
@@ -270,18 +270,18 @@ const ManageEvents = () => {
   )
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
               Manage Events
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
               View and manage all your published events
             </p>
           </div>
-          <Link to="/create-event" className="btn-primary flex items-center space-x-2">
+          <Link to="/create-event" className="btn-primary flex items-center justify-center space-x-2 w-full sm:w-auto">
             <PlusIcon className="h-5 w-5" />
             <span>Create Event</span>
           </Link>
@@ -299,11 +299,11 @@ const ManageEvents = () => {
             />
           </div>
           <div className="flex items-center space-x-2">
-            <FunnelIcon className="h-5 w-5 text-gray-400" />
+            <FunnelIcon className="h-5 w-5 text-gray-400 flex-shrink-0" />
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="all">All Status</option>
               <option value="Live">Live</option>
@@ -339,51 +339,51 @@ const ManageEvents = () => {
       ) : (
         <>
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-6">
         <Card className="text-center">
-          <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+          <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1">
             {events.length}
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-300">Total Events</div>
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Total Events</div>
         </Card>
         <Card className="text-center">
-          <div className="text-2xl font-bold text-green-600 mb-1">
+          <div className="text-xl sm:text-2xl font-bold text-green-600 mb-1">
             {events.filter(e => e.status === 'Live').length}
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-300">Live Events</div>
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Live Events</div>
         </Card>
         <Card className="text-center">
-          <div className="text-2xl font-bold text-blue-600 mb-1">
+          <div className="text-xl sm:text-2xl font-bold text-blue-600 mb-1">
             {events.filter(e => e.status === 'Upcoming').length}
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-300">Upcoming</div>
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Upcoming</div>
         </Card>
         <Card className="text-center">
-          <div className="text-2xl font-bold text-gray-600 mb-1">
+          <div className="text-xl sm:text-2xl font-bold text-gray-600 mb-1">
             {events.reduce((sum, event) => sum + (event.applications || 0), 0)}
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-300">Total Applications</div>
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Total Applications</div>
         </Card>
       </div>
 
       {/* InternEase Events Section */}
       <div className="mb-8">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+        <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4">
           Your InternEase Events
         </h2>
         {filteredEvents.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             {filteredEvents.map((event) => (
               <EventCard key={event._id || event.id} event={event} />
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg px-4">
             <CalendarIcon className="h-12 w-12 text-gray-400 dark:text-gray-600 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
               No events found
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4">
               {filter === 'all' 
                 ? 'You haven\'t created any events yet' 
                 : `No events with status "${filter}"`
@@ -399,10 +399,10 @@ const ManageEvents = () => {
       {/* Tech Events Section */}
       {eventbriteEvents.length > 0 && (
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
               🌐 Tech Community Events
-              <span className="ml-2 text-sm font-normal text-gray-500">
+              <span className="ml-2 text-xs sm:text-sm font-normal text-gray-500">
                 ({eventbriteEvents.length} events)
               </span>
             </h2>
@@ -415,17 +415,17 @@ const ManageEvents = () => {
           </div>
           
           {showEventbriteEvents && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               {eventbriteEvents.map((event) => (
                 <Card key={event.eventbriteId} className="hover:shadow-xl transition-all duration-300">
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-row gap-4">
                     {/* Event Poster */}
                     {event.poster && (
                       <div className="flex-shrink-0">
                         <img 
                           src={event.poster}
                           alt={event.title}
-                          className="w-32 h-32 object-cover rounded-lg"
+                          className="w-full h-40 sm:w-32 sm:h-32 object-cover rounded-lg"
                           onError={(e) => {
                             e.target.style.display = 'none'
                           }}
@@ -434,27 +434,27 @@ const ManageEvents = () => {
                     )}
                     
                     {/* Event Details */}
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between mb-4">
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-2">
+                            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white break-words">
                               {event.title}
                             </h3>
                             <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-800 text-white">
                               🌐 Tech Event
                             </span>
                           </div>
-                          <p className="text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
+                          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
                             {event.description}
                           </p>
-                          <div className="flex items-center space-x-4 text-sm text-gray-500 mb-3">
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm text-gray-500 mb-3">
                             <div className="flex items-center">
-                              <CalendarIcon className="h-4 w-4 mr-1" />
+                              <CalendarIcon className="h-4 w-4 mr-1 flex-shrink-0" />
                               {event.date}
                             </div>
                             <div className="flex items-center">
-                              <MapPinIcon className="h-4 w-4 mr-1" />
+                              <MapPinIcon className="h-4 w-4 mr-1 flex-shrink-0" />
                               {event.location}
                             </div>
                           </div>
@@ -463,7 +463,7 @@ const ManageEvents = () => {
 
                       {/* Stats */}
                       <div className="border-t pt-4">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
                           <div className="flex space-x-4 text-sm">
                             <div className="text-center">
                               <div className="font-bold text-gray-900 dark:text-white">
@@ -499,16 +499,16 @@ const ManageEvents = () => {
 
       {/* Student Registrations Section */}
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
             👥 Student Event Registrations
-            <span className="ml-2 text-sm font-normal text-gray-500">
+            <span className="ml-2 text-xs sm:text-sm font-normal text-gray-500">
               (Track student progress)
             </span>
           </h2>
           <button
             onClick={handleViewRegistrations}
-            className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+            className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors text-sm sm:text-base w-full sm:w-auto"
             disabled={loadingRegistrations}
           >
             {loadingRegistrations ? 'Loading...' : showStudentRegistrations ? 'Hide Registrations' : 'View All Registrations'}
@@ -525,10 +525,10 @@ const ManageEvents = () => {
               </Card>
             ) : (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                   <Card className="bg-blue-50 dark:bg-blue-900/20">
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                      <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400">
                         {studentRegistrations.length}
                       </div>
                       <div className="text-sm text-gray-600 dark:text-gray-400">Total Students</div>
@@ -536,7 +536,7 @@ const ManageEvents = () => {
                   </Card>
                   <Card className="bg-green-50 dark:bg-green-900/20">
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-green-600 dark:text-green-400">
+                      <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400">
                         {studentRegistrations.reduce((sum, s) => sum + s.totalEvents, 0)}
                       </div>
                       <div className="text-sm text-gray-600 dark:text-gray-400">Total Registrations</div>
@@ -544,7 +544,7 @@ const ManageEvents = () => {
                   </Card>
                   <Card className="bg-purple-50 dark:bg-purple-900/20">
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+                      <div className="text-2xl sm:text-3xl font-bold text-purple-600 dark:text-purple-400">
                         {(studentRegistrations.reduce((sum, s) => sum + s.totalEvents, 0) / studentRegistrations.length).toFixed(1)}
                       </div>
                       <div className="text-sm text-gray-600 dark:text-gray-400">Avg Events/Student</div>
@@ -556,27 +556,27 @@ const ManageEvents = () => {
                   {studentRegistrations.map((item) => (
                     <Card key={item.student.id} className="hover:shadow-lg transition-shadow">
                       <div className="flex items-start justify-between">
-                        <div className="flex-1">
+                        <div className="flex-1 min-w-0">
                           <div className="flex items-center space-x-3 mb-3">
-                            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+                            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
                               {item.student.name.charAt(0).toUpperCase()}
                             </div>
-                            <div>
-                              <h3 className="font-semibold text-gray-900 dark:text-white">
+                            <div className="min-w-0">
+                              <h3 className="font-semibold text-gray-900 dark:text-white truncate">
                                 {item.student.name}
                               </h3>
-                              <p className="text-sm text-gray-500">{item.student.email}</p>
+                              <p className="text-sm text-gray-500 truncate">{item.student.email}</p>
                             </div>
                           </div>
 
                           <div className="mb-3">
-                            <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-600 dark:text-gray-400 mb-2">
                               <span className="flex items-center">
-                                <UsersIcon className="h-4 w-4 mr-1" />
+                                <UsersIcon className="h-4 w-4 mr-1 flex-shrink-0" />
                                 {item.totalEvents} events registered
                               </span>
                               <span className="flex items-center">
-                                <CalendarIcon className="h-4 w-4 mr-1" />
+                                <CalendarIcon className="h-4 w-4 mr-1 flex-shrink-0" />
                                 Joined: {new Date(item.student.joinedAt).toLocaleDateString()}
                               </span>
                             </div>
@@ -588,9 +588,9 @@ const ManageEvents = () => {
                             </h4>
                             <div className="space-y-2">
                               {item.registrations.slice(0, 3).map((reg, idx) => (
-                                <div key={idx} className="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-800 p-2 rounded">
-                                  <span className="text-gray-900 dark:text-white font-medium">{reg.eventTitle}</span>
-                                  <span className="text-gray-500 text-xs">
+                                <div key={idx} className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm bg-gray-50 dark:bg-gray-800 p-2 rounded gap-1">
+                                  <span className="text-gray-900 dark:text-white font-medium break-words">{reg.eventTitle}</span>
+                                  <span className="text-gray-500 text-xs flex-shrink-0">
                                     {new Date(reg.registeredAt).toLocaleDateString()}
                                   </span>
                                 </div>
@@ -615,10 +615,10 @@ const ManageEvents = () => {
 
       {/* Event Details Modal */}
       {showModal && selectedEvent && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4">
           <div className="bg-white dark:bg-cardDark rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white dark:bg-cardDark border-b p-4 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                 Event Details
               </h2>
               <button
@@ -629,20 +629,20 @@ const ManageEvents = () => {
               </button>
             </div>
             
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               {/* Event Poster */}
               {selectedEvent.poster && (
                 <img 
                   src={`${API_ORIGIN}${selectedEvent.poster}`}
                   alt={selectedEvent.title}
-                  className="w-full h-64 object-cover rounded-lg mb-6"
+                  className="w-full h-48 sm:h-64 object-cover rounded-lg mb-6"
                 />
               )}
               
               {/* Event Info */}
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2 break-words">
                     {selectedEvent.title}
                   </h3>
                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(selectedEvent.status)}`}>
@@ -655,7 +655,7 @@ const ManageEvents = () => {
                   <p className="text-gray-900 dark:text-white mt-1">{selectedEvent.description}</p>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-sm font-medium text-gray-500">Type</label>
                     <p className="text-gray-900 dark:text-white mt-1">{selectedEvent.type}</p>

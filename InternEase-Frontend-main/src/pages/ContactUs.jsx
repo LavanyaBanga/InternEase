@@ -67,12 +67,12 @@ const ContactUs = () => {
   ]
 
   return (
-    <div className="p-4 sm:p-6">
+    <div className="p-4 sm:p-6 bg-slate-50 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-2xl font-bold text-slate-900 mb-2">
           Contact Us
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-slate-500">
           Get in touch with our team. We're here to help you succeed in your career journey.
         </p>
       </div>
@@ -80,12 +80,12 @@ const ContactUs = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Contact Form */}
         <Card>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+          <h2 className="text-xl font-semibold text-slate-900 mb-6">
             Send us a Message
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
                 Full Name
               </label>
               <input
@@ -95,13 +95,13 @@ const ContactUs = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter your full name"
               />
             </div>
             
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                 Email Address
               </label>
               <input
@@ -111,13 +111,13 @@ const ContactUs = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter your email address"
               />
             </div>
             
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="subject" className="block text-sm font-medium text-slate-700 mb-2">
                 Subject
               </label>
               <select
@@ -126,7 +126,7 @@ const ContactUs = () => {
                 value={formData.subject}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Select a subject</option>
                 <option value="general">General Inquiry</option>
@@ -138,7 +138,7 @@ const ContactUs = () => {
             </div>
             
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
                 Message
               </label>
               <textarea
@@ -148,7 +148,7 @@ const ContactUs = () => {
                 onChange={handleChange}
                 required
                 rows={6}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Tell us how we can help you..."
               />
             </div>
@@ -156,7 +156,7 @@ const ContactUs = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full btn-primary ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg transition-colors ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
@@ -166,7 +166,7 @@ const ContactUs = () => {
         {/* Contact Information */}
         <div className="space-y-6">
           <Card>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+            <h2 className="text-xl font-semibold text-slate-900 mb-6">
               Get in Touch
             </h2>
             <div className="space-y-6">
@@ -174,15 +174,15 @@ const ContactUs = () => {
                 const Icon = info.icon
                 return (
                   <div key={index} className="flex items-start space-x-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Icon className="h-5 w-5 text-primary" />
+                    <div className="w-10 h-10 bg-indigo-50 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Icon className="h-5 w-5 text-indigo-600" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-gray-900 dark:text-white mb-1">
+                      <h3 className="font-medium text-slate-900 mb-1">
                         {info.title}
                       </h3>
                       {info.details.map((detail, detailIndex) => (
-                        <p key={detailIndex} className="text-gray-600 dark:text-gray-300">
+                        <p key={detailIndex} className="text-slate-500">
                           {detail}
                         </p>
                       ))}
@@ -195,31 +195,31 @@ const ContactUs = () => {
 
           {/* FAQ */}
           <Card>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-xl font-semibold text-slate-900 mb-4">
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-gray-900 dark:text-white mb-1">
+                <h3 className="font-medium text-slate-900 mb-1">
                   How do I apply for internships?
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm text-slate-500">
                   Browse our internship listings and click "Apply Now" on any position that interests you.
                 </p>
               </div>
               <div>
-                <h3 className="font-medium text-gray-900 dark:text-white mb-1">
+                <h3 className="font-medium text-slate-900 mb-1">
                   Is the platform free to use?
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm text-slate-500">
                   Yes, internEase is completely free for students to use.
                 </p>
               </div>
               <div>
-                <h3 className="font-medium text-gray-900 dark:text-white mb-1">
+                <h3 className="font-medium text-slate-900 mb-1">
                   How do I track my applications?
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm text-slate-500">
                   Visit your Application Tracker to see the status of all your applications.
                 </p>
               </div>

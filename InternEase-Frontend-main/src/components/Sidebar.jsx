@@ -139,24 +139,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, collapsed, setCollapsed }) => {
         />
       )}
 
-      <div className={`fixed left-0 top-16 h-full bg-white dark:bg-cardDark shadow-lg z-40 transition-all duration-300 
+      <div className={`fixed left-0 top-16 h-full bg-white border-r border-slate-100 shadow-sm z-40 transition-all duration-300 
         ${collapsed ? 'lg:w-16' : 'lg:w-64'} 
         ${sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0'}
       `}>
         {/* Collapse button - only show on desktop */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="hidden lg:block absolute -right-3 top-6 bg-white dark:bg-cardDark border border-gray-200 dark:border-gray-700 rounded-full p-1 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+          className="hidden lg:block absolute -right-3 top-6 bg-white border border-slate-200 rounded-full p-1 hover:bg-slate-50 transition-colors shadow-sm"
         >
           {collapsed ? (
-            <ChevronRightIcon className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            <ChevronRightIcon className="h-4 w-4 text-slate-500" />
           ) : (
-            <ChevronLeftIcon className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            <ChevronLeftIcon className="h-4 w-4 text-slate-500" />
           )}
         </button>
 
         {/* Sidebar content */}
-        <div className="p-4 space-y-2 overflow-y-auto h-full pb-20">
+        <div className="p-4 space-y-1 overflow-y-auto h-full pb-20">
           {sidebarItems.map((item) => {
             const Icon = item.icon
             const isActive = location.pathname === item.href
@@ -167,8 +167,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, collapsed, setCollapsed }) => {
                 to={item.href}
                 className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
                   isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? 'bg-indigo-50 text-indigo-600'
+                    : 'text-slate-600 hover:bg-slate-50'
                 }`}
                 title={collapsed ? item.name : ''}
                 onClick={() => {

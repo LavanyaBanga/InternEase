@@ -40,7 +40,6 @@ const AssistantWidget = () => {
     setMessages(prev => [...prev, userMessage])
     setInputMessage('')
 
-   
     setTimeout(() => {
       const assistantMessage = {
         id: messages.length + 2,
@@ -80,7 +79,7 @@ const AssistantWidget = () => {
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-primary hover:bg-secondary text-white p-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110"
         >
           <ChatBubbleLeftRightIcon className="h-6 w-6" />
         </button>
@@ -89,26 +88,26 @@ const AssistantWidget = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6">
+    <div className="p-4 sm:p-6 bg-slate-50 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-2xl font-bold text-slate-900 mb-2">
           AI Assistant
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-slate-500">
           Get instant help with your career questions and internship search
         </p>
       </div>
 
       <div className="max-w-4xl mx-auto">
-        <Card className="h-[calc(100vh-200px)] min-h-[400px] md:h-[600px] flex flex-col">
+        <Card className="h-[calc(100vh-200px)] min-h-[400px] md:h-[600px] flex flex-col p-0 overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between p-4 border-b border-slate-200">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center">
                 <ChatBubbleLeftRightIcon className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h3 className="font-medium text-gray-900 dark:text-white">
+                <h3 className="font-medium text-slate-900">
                   AI Assistant
                 </h3>
                 <p className="text-sm text-green-600">Online</p>
@@ -116,9 +115,9 @@ const AssistantWidget = () => {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+              className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
             >
-              <XMarkIcon className="h-5 w-5 text-gray-500" />
+              <XMarkIcon className="h-5 w-5" />
             </button>
           </div>
 
@@ -129,11 +128,11 @@ const AssistantWidget = () => {
                 key={message.id}
                 className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                <div className={`flex items-start space-x-2 max-w-xs lg:max-w-md ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                <div className={`flex items-start space-x-2 max-w-[85%] sm:max-w-xs lg:max-w-md ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                     message.type === 'user' 
-                      ? 'bg-primary' 
-                      : 'bg-gradient-to-br from-primary to-secondary'
+                      ? 'bg-indigo-600' 
+                      : 'bg-indigo-600'
                   }`}>
                     {message.type === 'user' ? (
                       <UserIcon className="h-4 w-4 text-white" />
@@ -143,14 +142,14 @@ const AssistantWidget = () => {
                   </div>
                   <div className={`rounded-lg px-4 py-2 ${
                     message.type === 'user'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+                      ? 'bg-indigo-600 text-white'
+                      : 'bg-slate-100 text-slate-900'
                   }`}>
                     <p className="text-sm">{message.content}</p>
                     <p className={`text-xs mt-1 ${
                       message.type === 'user' 
                         ? 'text-white/70' 
-                        : 'text-gray-500 dark:text-gray-400'
+                        : 'text-slate-400'
                     }`}>
                       {message.timestamp.toLocaleTimeString()}
                     </p>
@@ -162,8 +161,8 @@ const AssistantWidget = () => {
 
           {/* Predefined Questions */}
           {messages.length === 1 && (
-            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+            <div className="p-4 border-t border-slate-200">
+              <p className="text-sm text-slate-500 mb-2">
                 Quick questions:
               </p>
               <div className="flex flex-wrap gap-2">
@@ -171,7 +170,7 @@ const AssistantWidget = () => {
                   <button
                     key={index}
                     onClick={() => handlePredefinedQuestion(question)}
-                    className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    className="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-sm hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
                   >
                     {question}
                   </button>
@@ -181,7 +180,7 @@ const AssistantWidget = () => {
           )}
 
           {/* Input */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="p-4 border-t border-slate-200">
             <div className="flex items-center space-x-2">
               <input
                 type="text"
@@ -189,11 +188,11 @@ const AssistantWidget = () => {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 placeholder="Ask me anything about internships, careers, or job search..."
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full bg-white dark:bg-cardDark text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="flex-1 min-w-0 px-4 py-2 border border-slate-200 rounded-full bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
               <button
                 onClick={handleSendMessage}
-                className="p-2 bg-primary hover:bg-secondary text-white rounded-full transition-colors"
+                className="p-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full transition-colors flex-shrink-0"
               >
                 <PaperAirplaneIcon className="h-5 w-5" />
               </button>
