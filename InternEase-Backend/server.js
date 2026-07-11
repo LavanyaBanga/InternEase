@@ -40,7 +40,7 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
 
   // Backend URL
-  'https://internease.onrender.com'
+  'https://internease-1.onrender.com'
 ]
   .filter(Boolean)
   .map((url) => url.replace(/\/$/, ''));
