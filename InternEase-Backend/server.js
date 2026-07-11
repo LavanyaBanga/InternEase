@@ -47,7 +47,7 @@ const allowedOrigins = [
   'https://internease-1.onrender.com',
 
   // Render environment variables
-  process.env.CLIENTURL,
+  process.env.CLIENT_URL,
   process.env.FRONTEND_URL
 ]
   .map(normalizeOrigin)
