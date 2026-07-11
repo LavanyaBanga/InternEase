@@ -1,6 +1,6 @@
 // src/services/api.js
 
-const DEFAULT_API_URL = 'https://internease.onrender.com/api'
+const DEFAULT_API_URL = 'https://internease-2.onrender.com'
 
 const normalizeBaseUrl = (url) => {
   const cleanedUrl = String(url || '')
