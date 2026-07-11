@@ -4,10 +4,10 @@ const dotenv = require('dotenv');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 
+dotenv.config();
+
 const connectDB = require('./config/db');
 const { errorHandler } = require('./middlewares/errorMiddleware');
-
-dotenv.config();
 
 const app = express();
 
@@ -23,79 +23,98 @@ connectDB().catch((error) => {
    SECURITY MIDDLEWARE
 ===================================================== */
 
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false
+  })
+);
 
 /* =====================================================
    CORS CONFIGURATION
 ===================================================== */
 
+const normalizeOrigin = (url) => {
+  if (!url) return null;
+
+  return url.trim().replace(/\/+$/, '');
+};
+
 const allowedOrigins = [
-  // Local frontend
   'http://localhost:5173',
+  'http://127.0.0.1:5173',
 
-  // Frontend URL from .env
+  // Deployed frontend
+  'https://internease-1.onrender.com',
+
+  // Render environment variables
   process.env.CLIENTURL,
-
-  // Optional alternative environment-variable name
-  process.env.FRONTEND_URL,
-
-  // Backend URL
-  'https://internease-1.onrender.com'
+  process.env.FRONTEND_URL
 ]
-  .filter(Boolean)
-  .map((url) => url.replace(/\/$/, ''));
+  .map(normalizeOrigin)
+  .filter(Boolean);
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      /*
-       Requests without origin:
-       - Postman
-       - Thunder Client
-       - Render health checks
-       - Server-to-server requests
-      */
-      if (!origin) {
-        return callback(null, true);
-      }
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow Postman, Thunder Client, Render health checks
+    if (!origin) {
+      return callback(null, true);
+    }
 
-      const normalizedOrigin = origin.replace(/\/$/, '');
+    const normalizedOrigin = normalizeOrigin(origin);
 
-      if (allowedOrigins.includes(normalizedOrigin)) {
-        return callback(null, true);
-      }
+    if (allowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, true);
+    }
 
-      console.error(`CORS blocked request from: ${normalizedOrigin}`);
+    console.error('CORS blocked origin:', normalizedOrigin);
+    console.log('Allowed origins:', allowedOrigins);
 
-      const corsError = new Error(
-        `CORS policy does not allow requests from ${normalizedOrigin}`
-      );
+    const corsError = new Error(
+      `CORS policy does not allow requests from ${normalizedOrigin}`
+    );
 
-      corsError.statusCode = 403;
+    corsError.statusCode = 403;
 
-      return callback(corsError);
-    },
+    return callback(corsError);
+  },
 
-    credentials: true,
+  credentials: true,
 
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  methods: [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
+  ],
 
-    allowedHeaders: [
-      'Content-Type',
-      'Authorization',
-      'Accept',
-      'Origin'
-    ],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'Accept',
+    'Origin'
+  ],
 
-    optionsSuccessStatus: 200
-  })
-);
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+
+/*
+  Explicit preflight handling
+*/
+app.options('*', cors(corsOptions));
 
 /* =====================================================
    BODY PARSERS
 ===================================================== */
 
-app.use(express.json({ limit: '10mb' }));
+app.use(
+  express.json({
+    limit: '10mb'
+  })
+);
 
 app.use(
   express.urlencoded({
@@ -111,6 +130,11 @@ app.use(
 app.use((req, res, next) => {
   console.log(
     `${new Date().toISOString()} | ${req.method} ${req.originalUrl}`
+  );
+
+  console.log(
+    'Request origin:',
+    req.headers.origin || 'No origin'
   );
 
   next();
@@ -185,7 +209,10 @@ app.use(
   require('./routes/notificationRoutes')
 );
 
-app.use('/api/events', require('./routes/eventRoutes'));
+app.use(
+  '/api/events',
+  require('./routes/eventRoutes')
+);
 
 app.use(
   '/api/eventbrite',
@@ -202,11 +229,20 @@ app.use(
   require('./routes/githubCoursesRoutes')
 );
 
-app.use('/api/notes', require('./routes/noteRoutes'));
+app.use(
+  '/api/notes',
+  require('./routes/noteRoutes')
+);
 
-app.use('/api/upload', require('./routes/uploadRoutes'));
+app.use(
+  '/api/upload',
+  require('./routes/uploadRoutes')
+);
 
-app.use('/api/contact', require('./routes/contactRoutes'));
+app.use(
+  '/api/contact',
+  require('./routes/contactRoutes')
+);
 
 /* =====================================================
    404 ROUTE
@@ -238,7 +274,7 @@ if (process.env.VERCEL !== '1') {
     console.log(
       `Environment: ${process.env.NODE_ENV || 'development'}`
     );
-    console.log(`Allowed CORS origins:`, allowedOrigins);
+    console.log('Allowed CORS origins:', allowedOrigins);
     console.log('========================================');
   });
 }
